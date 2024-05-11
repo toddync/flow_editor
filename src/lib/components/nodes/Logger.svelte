@@ -7,7 +7,8 @@
 		useNodesData
 	} from "@xyflow/svelte";
 	import * as Card from "$lib/components/ui/card";
-	import Node from "$lib/components/Glass.svelte";
+	import Glass from "$lib/components/Glass.svelte";
+	import Drag from "./Drag.svelte";
 
 	export let id;
 
@@ -23,7 +24,8 @@
 	console.log($connections);
 </script>
 
-<Node class="max-w-">
+<Drag />
+<Glass>
 	<Handle type="target" position={Position.Top} />
 	<Card.Root>
 		<Card.Header class="grid gap-1">
@@ -52,4 +54,4 @@
 			{/if}
 		</Card.Header>
 	</Card.Root>
-</Node>
+</Glass>

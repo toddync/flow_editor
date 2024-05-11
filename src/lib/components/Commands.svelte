@@ -22,6 +22,7 @@
 			id: crypto.randomUUID(),
 			position: { x, y },
 			type: type,
+			dragHandle: ".drag",
 			data: {}
 		});
 
@@ -44,7 +45,7 @@
 	});
 </script>
 
-<Command.Dialog bind:open={$open}>
+<Command.Dialog bind:open={$open} class="bg-opacity-0 backdrop-blur-md">
 	<Command.Input placeholder="Type a command or search..." />
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>

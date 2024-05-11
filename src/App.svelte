@@ -1,4 +1,8 @@
 <script lang="ts">
+	//@ts-nocheck
+	import { Sortable, Swap } from "sortablejs/modular/sortable.core.esm";
+	Sortable.mount(new Swap());
+
 	import "./assets/altFlow.css";
 	import {
 		SvelteFlow,
@@ -15,20 +19,19 @@
 	let nodeTypes = {};
 
 	$: nodeTypes = $nt;
-
-	$: console.log(nodeTypes);
 </script>
 
 <SvelteFlowProvider>
 	<div class="h-screen">
 		<SvelteFlow
-			nodes={Nodes}
-			edges={Edges}
-			{nodeTypes}
 			fitView
 			colorMode="dark"
-			on:nodeclick={(event) => {
-				// console.log("on node click", event.detail.node)
+			{nodeTypes}
+			nodes={Nodes}
+			edges={Edges}
+			defaultEdgeOptions={{
+				type: "smoothstep"
+				// animated: true
 			}}
 		>
 			<Controls />

@@ -14,6 +14,9 @@ importers:
       bits-ui:
         specifier: ^0.21.7
         version: 0.21.7(svelte@4.2.15)
+      classcat:
+        specifier: ^5.0.5
+        version: 5.0.5
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -23,6 +26,9 @@ importers:
       lucide-svelte:
         specifier: ^0.378.0
         version: 0.378.0(svelte@4.2.15)
+      sortablejs:
+        specifier: ^1.15.2
+        version: 1.15.2
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
@@ -1085,6 +1091,9 @@ packages:
   sorcery@0.11.0:
     resolution: {integrity: sha512-J69LQ22xrQB1cIFJhPfgtLuI6BpWRiWu1Y3vSsIwK/eAScqJxd/+CJlUuHQRdX2C9NGFamq+KqNywGgaThwfHw==}
     hasBin: true
+
+  sortablejs@1.15.2:
+    resolution: {integrity: sha512-FJF5jgdfvoKn1MAKSdGs33bIqLi3LmsgVTliuX6iITj834F+JRQZN90Z93yql8h0K2t0RwDPBmxwlbZfDcxNZA==}
 
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
@@ -2243,6 +2252,8 @@ snapshots:
       buffer-crc32: 0.2.13
       minimist: 1.2.8
       sander: 0.5.1
+
+  sortablejs@1.15.2: {}
 
   source-map-js@1.2.0: {}
 
