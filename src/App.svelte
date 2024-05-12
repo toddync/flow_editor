@@ -9,7 +9,8 @@
 		Controls,
 		Background,
 		BackgroundVariant,
-		SvelteFlowProvider
+		SvelteFlowProvider,
+		ConnectionLineType
 	} from "@xyflow/svelte";
 	import Commands from "$lib/components/Commands.svelte";
 	import { Edges } from "$lib/stores/edgesStore";
@@ -24,8 +25,9 @@
 <SvelteFlowProvider>
 	<div class="h-screen">
 		<SvelteFlow
-			fitView
 			colorMode="dark"
+			fitView
+			connectionLineType={ConnectionLineType.SmoothStep}
 			{nodeTypes}
 			nodes={Nodes}
 			edges={Edges}

@@ -21,7 +21,7 @@
 		$connections.map((connection) => connection.source)
 	);
 
-	console.log($connections);
+	// console.log($connections);
 </script>
 
 <Drag />
@@ -42,8 +42,12 @@
 									<tr class="border *:border">
 										<td class="px-2 py-1">{key}</td>
 										<td
-											class="px-2 py-1 break-words max-w-96"
-											>{nodeData.data[key]}</td
+											class="px-2 py-1 break-words whitespace-pre-wrap max-w-96"
+											>{JSON.stringify(
+												nodeData.data[key],
+												null,
+												4
+											)}</td
 										>
 									</tr>
 								{/each}

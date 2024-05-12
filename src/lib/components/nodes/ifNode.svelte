@@ -4,7 +4,12 @@
 	import Handle from "$lib/components/nodes/Handle.svelte";
 	import * as Card from "$lib/components/ui/card";
 	import Input from "$lib/components/ui/input/input.svelte";
-	import { Position, useSvelteFlow } from "@xyflow/svelte";
+	import {
+		Position,
+		useHandleConnections,
+		useNodesData,
+		useSvelteFlow
+	} from "@xyflow/svelte";
 	import { ArrowRight, CheckIcon, XIcon } from "lucide-svelte";
 	import { onMount } from "svelte";
 
@@ -17,9 +22,21 @@
 	onMount(() => {
 		update({ condition: "" });
 	});
+
+	export let id;
+	const connections = useHandleConnections({
+		nodeId: id,
+		type: "source"
+	});
+	$: nodesData = useNodesData(
+		$connections.map((connection) => connection.source)
+	);
+	$: console.log($nodesData);
+	console.log($connections);
 </script>
 
 <div class="m-0 p-0 relative">
+	<!-- <Drag class="z-10" /> -->
 	<Glass>
 		<Card.Root>
 			<Card.Header>
@@ -38,10 +55,10 @@
 	</pre>
 				</Card.Description>
 			</Card.Header>
-			<Card.Content class="-mt-4">
+			<Card.Content class="-mt-8">
 				<Input
 					placeholder="Condition..."
-					class="bg-transparent"
+					class="bg-transparent z-50"
 					value={$$props.data?.condition}
 					on:input={(e) => update({ condition: e.target.value })}
 				/>

@@ -86,3 +86,9 @@
 .svelte-flow__controls-button:hover {
 	@apply !text-lime-400;
 }
+.ghost {
+	@apply bg-zinc-900/50;
+}
+.dragging {
+	@apply bg-zinc-900/0;
+}

@@ -22,7 +22,7 @@
 			id: crypto.randomUUID(),
 			position: { x, y },
 			type: type,
-			dragHandle: ".drag",
+			dragHandle: type.toLowerCase().includes("var") && ".drag",
 			data: {}
 		});
 
