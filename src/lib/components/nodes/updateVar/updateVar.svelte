@@ -7,13 +7,13 @@
 	import * as Card from "$lib/components/ui/card";
 	import { ArrowRight } from "lucide-svelte";
 	import { onMount } from "svelte";
-	import VarTable from "./VarTable.svelte";
 	import Drag from "../Drag.svelte";
+	import VarTable from "./VarTable.svelte";
 
 	const updateNodeData = useSvelteFlow().updateNodeData;
 	const update = (x) => updateNodeData($$props.id, x);
 
-	let Rows = [{ id: crypto.randomUUID(), name: "", value: "" }];
+	let Rows = [{ id: 0, name: "", value: "" }];
 
 	onMount(() => {
 		update({ vars: Rows });

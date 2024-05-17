@@ -4,12 +4,7 @@
 	import Handle from "$lib/components/nodes/Handle.svelte";
 	import * as Card from "$lib/components/ui/card";
 	import Input from "$lib/components/ui/input/input.svelte";
-	import {
-		Position,
-		useHandleConnections,
-		useNodesData,
-		useSvelteFlow
-	} from "@xyflow/svelte";
+	import { Position, useSvelteFlow } from "@xyflow/svelte";
 	import { ArrowRight, CheckIcon, XIcon } from "lucide-svelte";
 	import { onMount } from "svelte";
 
@@ -22,21 +17,9 @@
 	onMount(() => {
 		update({ condition: "" });
 	});
-
-	export let id;
-	const connections = useHandleConnections({
-		nodeId: id,
-		type: "source"
-	});
-	$: nodesData = useNodesData(
-		$connections.map((connection) => connection.source)
-	);
-	$: console.log($nodesData);
-	console.log($connections);
 </script>
 
 <div class="m-0 p-0 relative">
-	<!-- <Drag class="z-10" /> -->
 	<Glass>
 		<Card.Root>
 			<Card.Header>
@@ -67,6 +50,7 @@
 	</Glass>
 
 	<Handle
+		id="prev"
 		type="target"
 		position={Position.Left}
 		class="top-1/2"
@@ -76,8 +60,8 @@
 	</Handle>
 
 	<Handle
+		id="false"
 		type="source"
-		id="true"
 		class="top-1/4 -right-5 text-lime-400"
 		position={Position.Right}
 	>
@@ -85,8 +69,8 @@
 	</Handle>
 
 	<Handle
+		id="true"
 		type="source"
-		id="false"
 		class="top-2/4 -right-5 text-red-400"
 		position={Position.Right}
 	>

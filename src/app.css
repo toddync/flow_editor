@@ -92,3 +92,9 @@
 .dragging {
 	@apply bg-zinc-900/0;
 }
+.svelte-flow__edges {
+	@apply z-50;
+	* {
+		@apply !stroke-zinc-700  !stroke-2;
+	}
+}

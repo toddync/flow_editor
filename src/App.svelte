@@ -22,6 +22,10 @@
 	$: nodeTypes = $nt;
 </script>
 
+<svelte:head>
+	<title>Flow Editor</title>
+</svelte:head>
+
 <SvelteFlowProvider>
 	<div class="h-screen">
 		<SvelteFlow

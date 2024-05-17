@@ -7,7 +7,9 @@
 >
 	<slot />
 	<Handle
-		{...{ ...$$props, class: "" }}
+		position={$$props.position}
+		type={$$props.type}
+		id={$$props.id}
 		class="bg-transparent rounded-sm z-50 w-full h-full -translate-y-1/2 top-1/2 -translate-x-1/2 -right-1/2 {$$props.handleClass}"
 	/>
 </div>

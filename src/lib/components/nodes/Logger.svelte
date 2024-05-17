@@ -1,7 +1,6 @@
 <script lang="ts">
 	//@ts-nocheck
 	import {
-		Handle,
 		Position,
 		useHandleConnections,
 		useNodesData
@@ -9,6 +8,7 @@
 	import * as Card from "$lib/components/ui/card";
 	import Glass from "$lib/components/Glass.svelte";
 	import Drag from "./Drag.svelte";
+	import Handle from "./Handle.svelte";
 
 	export let id;
 
@@ -20,8 +20,6 @@
 	$: nodesData = useNodesData(
 		$connections.map((connection) => connection.source)
 	);
-
-	// console.log($connections);
 </script>
 
 <Drag />

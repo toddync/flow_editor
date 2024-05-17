@@ -13,7 +13,7 @@
 	const updateNodeData = useSvelteFlow().updateNodeData;
 	const update = (x) => updateNodeData($$props.id, x);
 
-	let Rows = [{ id: crypto.randomUUID(), name: "", value: "", type: "let" }];
+	let Rows = [{ id: 0, name: "", value: "", type: "let" }];
 
 	onMount(() => {
 		update({ vars: Rows });
@@ -50,10 +50,20 @@
 		</Card.Content>
 	</Card.Root>
 </Glass>
-<Handle id="a" type="target" position={Position.Left} class="top-1/2 left-2.5">
+<Handle
+	id="prev"
+	type="target"
+	position={Position.Left}
+	class="top-1/2 left-2.5"
+>
 	<ArrowRight class="w-3.5 absolute -translate-y-1/2 top-1/2 -left-2" />
 </Handle>
 
-<Handle id="b" type="source" position={Position.Right} class="top-1/2 -right-5">
+<Handle
+	id="next"
+	type="source"
+	position={Position.Right}
+	class="top-1/2 -right-5"
+>
 	<ArrowRight class="w-3.5 absolute -translate-y-1/2 top-1/2 left-0.5" />
 </Handle>
