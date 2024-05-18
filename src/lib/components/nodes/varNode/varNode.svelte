@@ -10,6 +10,8 @@
 	import Drag from "../Drag.svelte";
 	import VarTable from "./VarTable.svelte";
 
+	const sub = $$props.data.sub == true;
+
 	const updateNodeData = useSvelteFlow().updateNodeData;
 	const update = (x) => updateNodeData($$props.id, x);
 
@@ -24,8 +26,8 @@
 	}
 </script>
 
-<Glass class="max-w-50">
-	<Card.Root class="border-2">
+<Glass class="max-w-md">
+	<Card.Root class="border-2 ">
 		<Card.Header display="flex gap-5">
 			<Card.Title class="w-full flex h-4">Variable declaration</Card.Title
 			>

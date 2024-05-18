@@ -13,6 +13,7 @@
 	export let flipDurationMs = 300;
 	export let update = false;
 	export let Rows;
+	export let sub;
 
 	function handleConsider(e) {
 		Rows = e.detail.items;

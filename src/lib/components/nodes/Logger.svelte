@@ -1,19 +1,16 @@
 <script lang="ts">
 	//@ts-nocheck
+	import Glass from "$lib/components/Glass.svelte";
+	import * as Card from "$lib/components/ui/card";
 	import {
 		Position,
 		useHandleConnections,
 		useNodesData
 	} from "@xyflow/svelte";
-	import * as Card from "$lib/components/ui/card";
-	import Glass from "$lib/components/Glass.svelte";
-	import Drag from "./Drag.svelte";
 	import Handle from "./Handle.svelte";
 
-	export let id;
-
 	const connections = useHandleConnections({
-		nodeId: id,
+		nodeId: $$props.id,
 		type: "target"
 	});
 
@@ -22,9 +19,8 @@
 	);
 </script>
 
-<Drag />
 <Glass>
-	<Handle type="target" position={Position.Top} />
+	<Handle type="target" position={Position.Top} class="left-1/2" />
 	<Card.Root>
 		<Card.Header class="grid gap-1">
 			{#if $nodesData}
