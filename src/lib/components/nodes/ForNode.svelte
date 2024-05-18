@@ -1,9 +1,9 @@
 <script lang="ts">
 	//@ts-nocheck
-	import Glass from "$lib/components/Glass.svelte";
 	import Handle from "$lib/components/nodes/Handle.svelte";
 	import * as Card from "$lib/components/ui/card";
 	import * as ContextMenu from "$lib/components/ui/context-menu";
+	import Input from "$lib/components/ui/input/input.svelte";
 	import { nodeTypes } from "$lib/stores/nodeTypes";
 	import { Nodes } from "$lib/stores/nodesStore";
 	import { NodeResizeControl, Position, useSvelteFlow } from "@xyflow/svelte";
@@ -11,8 +11,15 @@
 	import Node from "lucide-svelte/icons/blocks";
 	import { onMount } from "svelte";
 
+	const sub = $$props.data.sub == true;
+
 	const iconClass =
 		"w-3.5 absolute translate-x-1/2 right-1/2 -translate-y-1/2 top-1/2";
+
+	$: Container = {
+		H: $$props.height || (sub ? 400 : 500),
+		W: $$props.width || (sub ? 500 : 600)
+	};
 
 	const updateNodeData = useSvelteFlow().updateNodeData;
 	const update = (x) => updateNodeData($$props.id, x);
@@ -20,65 +27,88 @@
 	const types = Object.keys($nodeTypes);
 	const addNode = (t) => {
 		$Nodes.push({
-			id: crypto.randomUUID(),
-			data: {},
-			type: t,
+			data: { sub: true },
+			extent: "parent",
 			position: {
 				x: $$props.positionAbsoluteX,
 				y: $$props.positionAbsoluteY
 			},
-			parentId: $$props.id,
-			extent: "parent"
+			type: t,
+			id: `${$$props.id}---${crypto.randomUUID()}`,
+			parentId: $$props.id
 		});
 		$Nodes = $Nodes;
 	};
 
 	onMount(() => {
-		update({ condition: "" });
+		update({
+			initialization: "",
+			condition: "",
+			refresh: ""
+		});
 	});
 </script>
 
-<ContextMenu.Root class="h-full">
-	<ContextMenu.Trigger class="h-full">
-		<div class="m-0 p-0 relative h-full min-w-[300px]">
-			<Glass class="min-h-[200px] h-full">
-				<Card.Root class="min-h-[200px] h-full">
-					<Card.Header>
-						<Card.Title>For Loop</Card.Title>
-						<Card.Description class="h-full">
-							<!-- <pre lang="js" class="h-fit mt-2">
-								<code
-									><r class="text-orange-500">for</r>(<r
-										class="text-orange-700"> 1</r
-									>;<r class="text-orange-700"> 2</r>;<r
-										class="text-orange-700"> 3</r
-									>)&lbrace;</code
-								>
-			<code><CheckIcon class="ml-5 w-2.5 h-2.5 text-lime-400 -my-4" /></code>
+<Card.Root
+	class="absolute bg-black/10 backdrop-blur-sm -z-10 -left-6 -bottom-6"
+	style="height: {Container.H + 200}px; width: {Container.W + 48}px;"
+>
+	<Card.Header>
+		<Card.Title>For Loop</Card.Title>
+		<Card.Description class="h-full">
+			<pre lang="js" class="h-fit mt-2"><code
+					><r class="text-orange-500">for</r>(<r
+						class="text-orange-700"> initialization</r
+					>;<r class="text-orange-700"> condition</r>;<r
+						class="text-orange-700"> refresh</r
+					>)&lbrace;</code
+				>
+	<code class="text-lg text-lime-400">...</code>
 &rbrace;
-			</pre> -->
-						</Card.Description>
-					</Card.Header>
-					<Card.Content class="-mt-8">
-						<!-- <Input
-							placeholder="Condition..."
-							class="bg-transparent z-50"
-							value={$$props.data?.condition}
-							on:input={(e) => update({ condition: e.target.value })}
-		e				/> -->
-					</Card.Content>
-				</Card.Root>
-			</Glass>
+			</pre>
+		</Card.Description>
+	</Card.Header>
+	<Card.Content class="grid grid-cols-3 gap-2 -mt-11">
+		<Input
+			placeholder="Initialization..."
+			class="bg-transparent z-50"
+			value={$$props.data?.initialization}
+			on:input={(e) => update({ initialization: e.target.value })}
+		/>
+		<Input
+			placeholder="Condition..."
+			class="bg-transparent z-50"
+			value={$$props.data?.condition}
+			on:input={(e) => update({ condition: e.target.value })}
+		/>
+		<Input
+			placeholder="Refresh..."
+			class="bg-transparent z-50"
+			value={$$props.data?.refresh}
+			on:input={(e) => update({ refresh: e.target.value })}
+		/>
+	</Card.Content>
+</Card.Root>
+
+<ContextMenu.Root class="h-full">
+	<ContextMenu.Trigger class="h-full For" style="height: {Container.H}px">
+		<div class="m-0 p-0 relative h-full {sub ? 'w' : 'W'}">
+			<div
+				class="{sub ? 'h' : 'H'} bg-transparent border rounded-md z-40"
+				style="height: {Container.H}px; width: {Container.W}px"
+			/>
 		</div>
 	</ContextMenu.Trigger>
 	<ContextMenu.Content class="bg-opacity-10 backdrop-blur-sm">
 		<ContextMenu.Group name>
 			<ContextMenu.Label>Add</ContextMenu.Label>
 			{#each types as type}
-				<ContextMenu.Item on:click={() => addNode(type)}>
-					<Node class="mr-2 h-4 w-4" />
-					<span>{type} </span>
-				</ContextMenu.Item>
+				{#if type != "ForData"}
+					<ContextMenu.Item on:click={() => addNode(type)}>
+						<Node class="mr-2 h-4 w-4" />
+						<span>Add {type} </span>
+					</ContextMenu.Item>
+				{/if}
 			{/each}
 		</ContextMenu.Group>
 	</ContextMenu.Content>
@@ -86,7 +116,7 @@
 <Handle
 	type="target"
 	position={Position.Left}
-	class="top-1/2"
+	class="top-1/2 -left-6"
 	handleClass="left-1/2"
 >
 	<ArrowRight class={iconClass} />
@@ -95,16 +125,16 @@
 <Handle
 	id="next"
 	type="source"
-	class="top-1/2 -right-5"
+	class="top-1/2 -right-12"
 	position={Position.Right}
 >
 	<ArrowRight class={iconClass} />
 </Handle>
 
 <NodeResizeControl
-	minWidth={300}
-	minHeight={200}
-	style="background: transparent; border: none;"
+	minWidth={sub ? 300 : 600}
+	minHeight={sub ? 250 : 500}
+	class="border-none bg-transparent"
 >
 	<Expand class="stroke-slate-100 -ml-6 -mt-7 size-4" />
 </NodeResizeControl>
