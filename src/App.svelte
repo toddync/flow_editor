@@ -15,12 +15,8 @@
 	import Commands from "$lib/components/Commands.svelte";
 	import { Edges } from "$lib/stores/edgesStore";
 	import { Nodes } from "$lib/stores/nodesStore";
-	import { nodeTypes as nt } from "$lib/stores/nodeTypes";
+	import { nodeTypes } from "$lib/stores/nodeTypes";
 	import Menu from "$lib/components/Menu.svelte";
-
-	let nodeTypes = {};
-
-	$: nodeTypes = $nt;
 </script>
 
 <svelte:head>
@@ -33,12 +29,11 @@
 			colorMode="dark"
 			fitView
 			connectionLineType={ConnectionLineType.SmoothStep}
-			{nodeTypes}
+			nodeTypes={$nodeTypes}
 			nodes={Nodes}
 			edges={Edges}
 			defaultEdgeOptions={{
 				type: "smoothstep"
-				// animated: true
 			}}
 		>
 			<Controls />
