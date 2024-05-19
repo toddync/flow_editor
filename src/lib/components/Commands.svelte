@@ -51,10 +51,12 @@
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Suggestions">
 			{#each types as type}
-				<Command.Item onSelect={() => addNode(type)}>
-					<Node class="mr-2 h-4 w-4" />
-					<span>Add {type} </span>
-				</Command.Item>
+				{#if type != "StartNode"}
+					<Command.Item onSelect={() => addNode(type)}>
+						<Node class="mr-2 h-4 w-4" />
+						<span>Add {type} </span>
+					</Command.Item>
+				{/if}
 			{/each}
 		</Command.Group>
 		<!-- <Command.Separator /> -->

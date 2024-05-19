@@ -103,7 +103,7 @@
 		<ContextMenu.Group name>
 			<ContextMenu.Label>Add</ContextMenu.Label>
 			{#each types as type}
-				{#if type != "ForData"}
+				{#if type != "StartNode"}
 					<ContextMenu.Item on:click={() => addNode(type)}>
 						<Node class="mr-2 h-4 w-4" />
 						<span>Add {type} </span>

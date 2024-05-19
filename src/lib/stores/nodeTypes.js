@@ -4,8 +4,10 @@ import { VarNode } from "$lib/components/nodes/varNode";
 import IfNode from "$lib/components/nodes/ifNode.svelte";
 import ForNode from "$lib/components/nodes/ForNode.svelte";
 import { UpdateVar } from "$lib/components/nodes/updateVar";
+import StartNode from "$lib/components/nodes/StartNode.svelte";
 
 export const nodeTypes = writable({
+	StartNode,
 	VarNode,
 	UpdateVar,
 	IfNode,
