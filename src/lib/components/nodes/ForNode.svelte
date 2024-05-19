@@ -21,7 +21,7 @@
 		W: $$props.width || (sub ? 500 : 600)
 	};
 
-	const updateNodeData = useSvelteFlow().updateNodeData;
+	const { flowToScreenPosition, updateNodeData } = useSvelteFlow();
 	const update = (x) => updateNodeData($$props.id, x);
 
 	const types = Object.keys($nodeTypes);
@@ -29,10 +29,10 @@
 		$Nodes.push({
 			data: { sub: true },
 			extent: "parent",
-			position: {
+			position: flowToScreenPosition({
 				x: $$props.positionAbsoluteX,
 				y: $$props.positionAbsoluteY
-			},
+			}),
 			type: t,
 			id: `${$$props.id}---${crypto.randomUUID()}`,
 			parentId: $$props.id
@@ -93,16 +93,6 @@
 <ContextMenu.Root class="h-full">
 	<ContextMenu.Trigger class="h-full For" style="height: {Container.H}px">
 		<div class="m-0 p-0 relative h-full {sub ? 'w' : 'W'}">
-			<Handle
-				type="source"
-				id="start"
-				position={Position.Bottom}
-				class="left-1/2 top-0"
-				isValidConnection={(connection) =>
-					connection.target.includes($$props.id)}
-			>
-				<Play class="{iconClass} text-lime-400" />
-			</Handle>
 			<div
 				class="{sub ? 'h' : 'H'} bg-transparent border rounded-md z-40"
 				style="height: {Container.H}px; width: {Container.W}px"
@@ -130,6 +120,16 @@
 	handleClass="left-1/2"
 >
 	<ArrowRight class={iconClass} />
+</Handle>
+
+<Handle
+	type="source"
+	id="start"
+	position={Position.Bottom}
+	class="left-1/2 top-0"
+	isValidConnection={(connection) => connection.target.includes($$props.id)}
+>
+	<Play class="{iconClass} text-lime-400" />
 </Handle>
 
 <Handle
