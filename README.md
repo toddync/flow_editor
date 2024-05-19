@@ -1,47 +1,54 @@
-# Svelte + TS + Vite
+## What it is?
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+Flow Editor is, as the name implies, a node based editor for code. The intent is for it to be language-agnostic, allowing for you to use whatever programming/scripting language you might want
 
-## Recommended IDE Setup
+---
+## Why it is?
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+I feel like programming, as it is, is too complicated. Obviously this isn't gonna make a toddler be able to build google from scratch, but I want this tool to at least abstract away the syntax shenanigans of the language, so the transition between two languages is as simple as clicking a button and changing the target language in the *compilation settings\** menu.
 
-## Need an official Svelte framework?
+Also, programming isn't about knowing every detail of a single language, it is knowing how to solve problems, how to brake'em down into "bite-sized" chunks that you can solve one by one and just snap them together in the end like a puzzle... or like a series of nodes!
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+#### Why nodes?
 
-## Technical considerations
+I could sit here and say that I had a epiphany in the shower while talking to Jamal (my imaginary rubber duck), but the truth is way simpler: I think Scratch did a good job abstracting the bulk of the programming difficulties away from the tech starved kids. But blocks are for kids, and outdated.
 
-**Why use this over SvelteKit?**
+Also, nodes can offer a better visualization of data flow in your code, making it easier to comprehend how does it get from point A to point B, which is something that I think scratch couldn't cover. With nodes, you just need to follow the connection lines, and they also have arrows indicating where the lines start and end.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+---
+## How does (will) it  work?
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+The web interface lets you add nodes to the Nodes array and connect them using edges that will be added to the Edges array, that's all the web interface will do for the time being, apart from enabling you to export your Flow as a SVG (to maintain quality), so you con use it in presentations, to explain your code, or just as decoration, do as you please.
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+After this, its the job of the compiler/transpiler (call it as you please, but transpiler is the best way to describe), it will take the arrays, organize them, and them use the nodes metadata (you can see the metadata by plugging any node into the logger node, the logger node doesn't have any metadata) to build the final code based on a series of *templates\**.
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+#### Why templates?
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+I'll use templates because it makes the code more modular and easier to expand in the future. Also, using well defined templates enables me to let the user add a template for a not yet supported language.
 
-**Why include `.vscode/extensions.json`?**
+---
+# glossary
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+\*: not implemented yet
 
-**Why enable `allowJs` in the TS template?**
+---
+## Development progress:
 
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+- [/] Add all basic nodes
+	- [x] Variables 
+		- [x] Declaration
+		- [x] Update
+	- [/] Conditionals
+		- [x] If / Else
+		- [ ] Switch case
+	- [/] Loops
+		- [x] For
+		- [ ] While
+		- [ ] Do while
+	- [ ] Functions
+		- [ ] Declaration
+		- [ ] Calling
+- [/] Exports
+	- [x] Image (SVG)
+	- [ ] Json schema
+	- [ ] Source code
