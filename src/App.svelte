@@ -16,6 +16,7 @@
 	import { Edges } from "$lib/stores/edgesStore";
 	import { Nodes } from "$lib/stores/nodesStore";
 	import { nodeTypes as nt } from "$lib/stores/nodeTypes";
+	import Menu from "$lib/components/Menu.svelte";
 
 	let nodeTypes = {};
 
@@ -46,4 +47,5 @@
 	</div>
 
 	<Commands />
+	<Menu />
 </SvelteFlowProvider>

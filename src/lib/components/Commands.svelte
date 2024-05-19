@@ -1,7 +1,7 @@
 <script lang="ts">
 	//@ts-nocheck
 	import { onMount } from "svelte";
-	import Node from "lucide-svelte/icons/blocks";
+	import { Blocks as Node } from "lucide-svelte/icons";
 	import { showCommands as open } from "$lib/stores/ShowCommands.js";
 	import * as Command from "$lib/components/ui/command/index.js";
 
