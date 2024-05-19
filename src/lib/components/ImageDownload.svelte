@@ -5,13 +5,13 @@
 		getViewportForBounds,
 		useNodes
 	} from "@xyflow/svelte";
-	import { toSvg } from "html-to-image";
+	import { toJpeg, toPng, toSvg } from "html-to-image";
 	import { ImageDown } from "lucide-svelte/icons";
 	import { Button } from "./ui/button";
 
 	const nodes = useNodes();
 
-	const scale = 2;
+	const scale = 3;
 	const imageWidth = 1024 * scale;
 	const imageHeight = 768 * scale;
 
@@ -32,14 +32,14 @@
 
 		if (viewport) {
 			toSvg(viewportDomNode, {
-				// backgroundColor: "#000",
 				width: imageWidth,
 				height: imageHeight,
 				style: {
 					width: `${imageWidth}px`,
 					height: `${imageHeight}px`,
-					transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
-					"background-image": `url("http://localhost:5173/back.png")`
+					position: "absolute",
+					transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`
+					// "background-image": `url("http://localhost:5173/back.png")`
 				}
 			}).then((dataUrl) => {
 				const link = document.createElement("a");
@@ -56,6 +56,6 @@
 	class="bg-black/10 backdrop-blur-sm border hover:bg-accent"
 	on:click={handleClick}
 >
-	<p class="sr-only">Download Flow as a image</p>
+	<p class="sr-only">Download Flow as SVG</p>
 	<ImageDown class="size-6 text-foreground" />
 </Button>
