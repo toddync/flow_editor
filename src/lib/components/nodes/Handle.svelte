@@ -18,14 +18,9 @@
 			return _;
 		};
 
-		if (c.target.includes("---") || c.source.includes("---")) {
-			const SourceGroup = getGroup(c.source);
-			const TargetGroup = getGroup(c.target);
-
-			return SourceGroup == TargetGroup;
-		} else {
-			return true;
-		}
+		return c.target.includes("---") || c.source.includes("---")
+			? getGroup(c.source) == getGroup(c.target)
+			: true;
 	};
 </script>
 
