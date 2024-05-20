@@ -5,8 +5,8 @@
 		getViewportForBounds,
 		useNodes
 	} from "@xyflow/svelte";
-	import { toJpeg, toPng, toSvg } from "html-to-image";
-	import { ImageDown } from "lucide-svelte/icons";
+	import { toSvg } from "html-to-image";
+	import { Image } from "lucide-svelte/icons";
 	import { Button } from "./ui/button";
 
 	const nodes = useNodes();
@@ -57,5 +57,5 @@
 	on:click={handleClick}
 >
 	<p class="sr-only">Download Flow as SVG</p>
-	<ImageDown class="size-6 text-foreground" />
+	<Image class="size-6 text-foreground" />
 </Button>

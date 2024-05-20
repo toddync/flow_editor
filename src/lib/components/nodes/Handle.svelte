@@ -8,7 +8,6 @@
 			if (typeof _ == "object") {
 				if (_?.length > 1) {
 					_.pop();
-					console.log(_);
 					return _.join("---");
 				} else {
 					return _.pop();
