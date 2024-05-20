@@ -1,4 +1,5 @@
-![sample](https://github.com/toddync/flow_editor/assets/102318495/1907dd0f-c5b9-45c9-a848-0a24f8eefbae)
+![Screenshot from 2024-05-20 18-57-21](https://github.com/toddync/flow_editor/assets/102318495/4c4c0f07-b77c-4510-a427-839a86c5b724)
+
 
 ## What it is?
 
@@ -46,7 +47,7 @@ I'll use templates because it makes the code more modular and easier to expand i
     -   [ ] Functions
         -   [ ] Declaration
         -   [ ] Calling
--   [ ] Exports
+-   [x] Exports
     -   [x] Image (SVG)
     -   [x] Json schema
-    -   [ ] Source code
+    -   [x] Source code
