@@ -32,6 +32,7 @@
 		</Card.Header>
 	</Card.Root>
 	<Handle
+		id="next"
 		position={Position.Right}
 		class="-right-5 top-1/2 -translate-x-1/2 -translate-y-1/2"
 	>

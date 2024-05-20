@@ -60,7 +60,7 @@
 	</Handle>
 
 	<Handle
-		id="false"
+		id="true"
 		type="source"
 		class="top-1/4 -right-5 text-lime-400"
 		position={Position.Right}
@@ -69,7 +69,7 @@
 	</Handle>
 
 	<Handle
-		id="true"
+		id="false"
 		type="source"
 		class="top-2/4 -right-5 text-red-400"
 		position={Position.Right}
