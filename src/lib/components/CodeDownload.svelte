@@ -2,23 +2,19 @@
 	//@ts-nocheck
 	import { Edges } from "$lib/stores/edgesStore";
 	import { Nodes } from "$lib/stores/nodesStore";
-	import { V1 } from "$lib/transpiler";
+	import { Transpile } from "$lib/transpiler";
 	import { Button } from "./ui/button";
 	import { Code2 } from "lucide-svelte/icons";
 
 	function download() {
-		// var element = document.createElement("a");
-		// element.setAttribute(
-		// 	"href",
-		// 	"data:text/plain;charset=utf-8," +
-		// 		encodeURIComponent(
-		// 			JSON.stringify({ Nodes: $Nodes, Edges: $Edges }, null, 2)
-		// 		)
-		// );
-		// element.setAttribute("download", "svelte-flow.json");
-		// element.click();
-
-		V1($Nodes, $Edges);
+		var element = document.createElement("a");
+		element.setAttribute(
+			"href",
+			"data:text/plain;charset=utf-8," +
+				encodeURIComponent(Transpile($Nodes, $Edges))
+		);
+		element.setAttribute("download", "svelte-flow.js");
+		element.click();
 	}
 </script>
 
