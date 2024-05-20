@@ -28,7 +28,7 @@
 	}
 </script>
 
-<Glass class="max-w-md">
+<Glass class="max-w-m">
 	<Card.Root class="border-2 ">
 		<Card.Header display="flex gap-5">
 			<Card.Title class="w-full flex h-4">Variable declaration</Card.Title
