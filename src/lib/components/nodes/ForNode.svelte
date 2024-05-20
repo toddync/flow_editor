@@ -42,9 +42,9 @@
 
 	onMount(() => {
 		update({
-			initialization: "",
-			condition: "",
-			refresh: ""
+			initialization: $$props.data.initialization || "",
+			condition: $$props.data.condition || "",
+			refresh: $$props.data.refresh || ""
 		});
 	});
 </script>

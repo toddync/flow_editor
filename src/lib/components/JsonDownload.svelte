@@ -21,7 +21,6 @@
 	}
 
 	function restore(e) {
-		console.log(e.target.files[0]);
 		const reader = new FileReader();
 		reader.readAsText(e.target.files[0]);
 		reader.onload = function () {
@@ -63,4 +62,10 @@
 	</Popover.Content>
 </Popover.Root>
 
-<input type="file" class="sr-only" id="json" on:change={restore} />
+<input
+	type="file"
+	class="sr-only"
+	id="json"
+	accept=".json"
+	on:change={restore}
+/>

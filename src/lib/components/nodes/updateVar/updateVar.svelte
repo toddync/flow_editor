@@ -13,7 +13,7 @@
 	const updateNodeData = useSvelteFlow().updateNodeData;
 	const update = (x) => updateNodeData($$props.id, x);
 
-	let Rows = [{ id: 0, name: "", value: "" }];
+	let Rows = $$props.data.vars || [{ id: 0, name: "", value: "" }];
 
 	onMount(() => {
 		update({ vars: Rows });

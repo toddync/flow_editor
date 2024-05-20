@@ -15,7 +15,7 @@
 	const update = (x) => updateNodeData($$props.id, x);
 
 	onMount(() => {
-		update({ condition: "" });
+		update({ condition: $$props.data.condition || "" });
 	});
 </script>
 
