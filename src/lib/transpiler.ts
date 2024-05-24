@@ -1,5 +1,5 @@
 //@ts-nocheck
-const loops = ["ForNode"];
+const loops = ["ForNode", "WhileNode", "DoWhileNode"];
 const conditionals = ["IfNode"];
 const variables = ["VarNode", "UpdateVar"];
 let indentLvl = 0;
@@ -55,15 +55,27 @@ function Parse(n, t, N, E) {
 function Loops(Node, id, N, E) {
 	let code = "";
 	indentLvl++;
-	if (Node.node.toLowerCase().includes("for")) {
+	if (Node.node == "ForNode") {
 		code += `for(${Node.data.initialization}; ${Node.data.condition}; ${Node.data.refresh}){\n`;
+	}
+
+	if (Node.node == "WhileNode") {
+		code += `while(${Node.data.condition}){\n`;
+	}
+
+	if (Node.node == "DoWhileNode") {
+		code += `do{\n`;
 	}
 
 	if (N[E[`${id}---start`]]) {
 		code += Parse(N[E[`${id}---start`]], E[`${id}---start`], N, E);
 	}
 
-	code += indent(indentLvl - 1) + "}\n";
+	if (Node.node == "DoWhileNode") {
+		code += indent(indentLvl - 1) + `} while(${Node.data.condition})\n`;
+	} else {
+		code += indent(indentLvl - 1) + "}\n";
+	}
 
 	return code;
 }

@@ -78,6 +78,8 @@
 				},
 			}).then((dataUrl) => {
 				download(dataUrl, "svelte-flow.svg");
+
+				// console.log(decodeURIComponent(dataUrl));
 			});
 		}
 	}

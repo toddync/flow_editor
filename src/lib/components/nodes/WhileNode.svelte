@@ -42,9 +42,7 @@
 
 	onMount(() => {
 		update({
-			initialization: $$props.data.initialization || "",
 			condition: $$props.data.condition || "",
-			refresh: $$props.data.refresh || "",
 		});
 	});
 </script>
@@ -54,38 +52,24 @@
 	style="height: {Container.H + 200}px; width: {Container.W + 48}px;"
 >
 	<Card.Header>
-		<Card.Title>For Loop</Card.Title>
+		<Card.Title>While Loop</Card.Title>
 		<Card.Description class="h-full">
 			<pre lang="js" class="h-fit mt-2"><code
-					><r class="text-orange-500">for</r>(<r
-						class="text-orange-700"> initialization</r
-					>;<r class="text-orange-700"> condition</r>;<r
-						class="text-orange-700"> refresh</r
-					>)&lbrace;</code
+					><r class="text-orange-500">while</r>(<r
+						class="text-orange-700">condition</r
+					><r>)&lbrace;</r></code
 				>
 	<code class="text-lg text-lime-400">...</code>
 &rbrace;
 			</pre>
 		</Card.Description>
 	</Card.Header>
-	<Card.Content class="grid grid-cols-3 gap-2 -mt-11">
-		<Input
-			placeholder="Initialization..."
-			class="bg-transparent z-50"
-			value={$$props.data?.initialization}
-			on:input={(e) => update({ initialization: e.target.value })}
-		/>
+	<Card.Content class="grid -mt-11">
 		<Input
 			placeholder="Condition..."
 			class="bg-transparent z-50"
 			value={$$props.data?.condition}
 			on:input={(e) => update({ condition: e.target.value })}
-		/>
-		<Input
-			placeholder="Refresh..."
-			class="bg-transparent z-50"
-			value={$$props.data?.refresh}
-			on:input={(e) => update({ refresh: e.target.value })}
 		/>
 	</Card.Content>
 </Card.Root>

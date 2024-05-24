@@ -1,6 +1,5 @@
 ![Screenshot from 2024-05-20 18-57-21](https://github.com/toddync/flow_editor/assets/102318495/4c4c0f07-b77c-4510-a427-839a86c5b724)
 
-
 ## What it is?
 
 Flow Editor is, as the name implies, a node based editor for code. The intent is for it to be language-agnostic, allowing for you to use whatever programming/scripting language you might want
@@ -40,10 +39,10 @@ I'll use templates because it makes the code more modular and easier to expand i
     -   [ ] Conditionals
         -   [x] If / Else
         -   [ ] Switch case
-    -   [ ] Loops
+    -   [x] Loops
         -   [x] For
-        -   [ ] While
-        -   [ ] Do while
+        -   [x] While
+        -   [x] Do while
     -   [ ] Functions
         -   [ ] Declaration
         -   [ ] Calling

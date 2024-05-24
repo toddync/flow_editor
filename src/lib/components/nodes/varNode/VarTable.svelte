@@ -49,7 +49,7 @@
 					id: crypto.randomUUID(),
 					name: "",
 					value: "",
-					type: "let"
+					type: "let",
 				}) && (Rows = Rows)}
 		>
 			<Plus />
@@ -66,7 +66,7 @@
 		use:dndzone={{
 			items: Rows,
 			flipDurationMs,
-			dropTargetClasses: ["outline-none"]
+			dropTargetClasses: ["outline-none"],
 		}}
 		on:consider={handleConsider}
 		on:finalize={handleFinalize}
@@ -95,7 +95,7 @@
 						rows={1}
 						value={item.value}
 						on:input={(e) => change(e, item.id)}
-						class="max-w-32 whitespace-pre"
+						class="max-w-56 whitespace-pre"
 					/>
 				</Table.Cell>
 				<Table.Cell>

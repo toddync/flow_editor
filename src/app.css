@@ -108,7 +108,7 @@
 	}
 }
 
-.For {
+.loop {
 	.H {
 		@apply min-h-[500px];
 	}
