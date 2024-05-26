@@ -99,6 +99,11 @@
 		@apply !stroke-zinc-700  !stroke-2;
 	}
 }
+
+.svelte-flow__node {
+	@apply max-h-fit;
+}
+
 .selected {
 	* {
 		@apply border-orange-900/50;
@@ -122,4 +127,8 @@
 	.w {
 		@apply min-w-[500px];
 	}
+}
+
+.border {
+	@apply !border-[1px];
 }

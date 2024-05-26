@@ -17,8 +17,7 @@
 		"w-3.5 absolute translate-x-1/2 right-1/2 -translate-y-1/2 top-1/2";
 
 	$: Container = {
-		H: $$props.height || (sub ? 400 : 500),
-		W: $$props.width || (sub ? 500 : 600),
+		W: $$props.width || 400,
 	};
 
 	const { flowToScreenPosition, updateNodeData } = useSvelteFlow();
@@ -50,8 +49,8 @@
 </script>
 
 <Card.Root
-	class="absolute bg-black/10 backdrop-blur-sm -z-10 -left-6 -bottom-6"
-	style="height: {Container.H + 200}px; width: {Container.W + 48}px;"
+	class="bg-black/10 backdrop-blur-sm -z-10 -left-6 -bottom-6 drag"
+	style=" width: {Container.W}px;"
 >
 	<Card.Header>
 		<Card.Title>For Loop</Card.Title>
@@ -68,7 +67,7 @@
 			</pre>
 		</Card.Description>
 	</Card.Header>
-	<Card.Content class="grid grid-cols-3 gap-2 -mt-11">
+	<Card.Content class="grid gap-2 -mt-10">
 		<Input
 			placeholder="Initialization..."
 			class="bg-transparent z-50"
@@ -83,68 +82,43 @@
 		/>
 		<Input
 			placeholder="Refresh..."
-			class="bg-transparent z-50"
+			class="bg-transparent z-50 mb-5"
 			value={$$props.data?.refresh}
 			on:input={(e) => update({ refresh: e.target.value })}
 		/>
+		<NodeResizeControl
+			minWidth={400}
+			maxHeight={250}
+			class="border-none bg-transparent"
+		>
+			<Expand class="stroke-slate-100 -ml-6 -mt-7 size-4" />
+		</NodeResizeControl>
 	</Card.Content>
+
+	<Handle
+		type="target"
+		position={Position.Left}
+		class="top-1/2 -left-0"
+		handleClass="left-1/2"
+	>
+		<ArrowRight class={iconClass} />
+	</Handle>
+
+	<Handle
+		type="source"
+		id="start"
+		position={Position.Bottom}
+		class="left-1/2 -bottom-5"
+	>
+		<Play class="{iconClass} text-lime-400" />
+	</Handle>
+
+	<Handle
+		id="next"
+		type="source"
+		class="top-1/2 -right-5"
+		position={Position.Right}
+	>
+		<ArrowRight class={iconClass} />
+	</Handle>
 </Card.Root>
-
-<ContextMenu.Root class="h-full">
-	<ContextMenu.Trigger class="h-full loop" style="height: {Container.H}px">
-		<div class="m-0 p-0 relative h-full {sub ? 'w' : 'W'}">
-			<div
-				class="{sub ? 'h' : 'H'} bg-transparent border rounded-md z-40"
-				style="height: {Container.H}px; width: {Container.W}px"
-			/>
-		</div>
-	</ContextMenu.Trigger>
-	<ContextMenu.Content class="bg-opacity-10 backdrop-blur-sm">
-		<ContextMenu.Group name>
-			<ContextMenu.Label>Add</ContextMenu.Label>
-			{#each types as type}
-				{#if type != "StartNode"}
-					<ContextMenu.Item on:click={() => addNode(type)}>
-						<Node class="mr-2 h-4 w-4" />
-						<span>Add {type} </span>
-					</ContextMenu.Item>
-				{/if}
-			{/each}
-		</ContextMenu.Group>
-	</ContextMenu.Content>
-</ContextMenu.Root>
-<Handle
-	type="target"
-	position={Position.Left}
-	class="top-1/2 -left-6"
-	handleClass="left-1/2"
->
-	<ArrowRight class={iconClass} />
-</Handle>
-
-<Handle
-	type="source"
-	id="start"
-	position={Position.Bottom}
-	class="left-1/2 top-0"
-	isValidConnection={(connection) => connection.target.includes($$props.id)}
->
-	<Play class="{iconClass} text-lime-400" />
-</Handle>
-
-<Handle
-	id="next"
-	type="source"
-	class="top-1/2 -right-12"
-	position={Position.Right}
->
-	<ArrowRight class={iconClass} />
-</Handle>
-
-<NodeResizeControl
-	minWidth={sub ? 300 : 600}
-	minHeight={sub ? 250 : 500}
-	class="border-none bg-transparent"
->
-	<Expand class="stroke-slate-100 -ml-6 -mt-7 size-4" />
-</NodeResizeControl>

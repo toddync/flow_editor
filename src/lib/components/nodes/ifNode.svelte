@@ -19,7 +19,7 @@
 	});
 </script>
 
-<div class="m-0 p-0 relative">
+<div class="m-0 p-0 relative drag">
 	<Glass>
 		<Card.Root>
 			<Card.Header>

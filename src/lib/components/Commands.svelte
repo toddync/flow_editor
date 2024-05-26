@@ -37,7 +37,7 @@
 			id: crypto.randomUUID(),
 			position: { x, y },
 			type: type,
-			dragHandle: type.toLowerCase().includes("var") && ".drag",
+			dragHandle: ".drag",
 			data: {},
 		});
 
@@ -74,11 +74,10 @@
 					height: `${imageHeight}px`,
 					position: "absolute",
 					transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
-					// "background-image": `url("http://localhost:5173/back.png")`,
+					// "background-image": `url("${document.URL}back.png")`,
 				},
 			}).then((dataUrl) => {
 				download(dataUrl, "svelte-flow.svg");
-
 				// console.log(decodeURIComponent(dataUrl));
 			});
 		}

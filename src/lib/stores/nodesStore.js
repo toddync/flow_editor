@@ -7,7 +7,7 @@ export const Nodes = writable([
 		data: {},
 		position: {
 			x: 0,
-			y: 0
-		}
-	}
+			y: 0,
+		},
+	},
 ]);

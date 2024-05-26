@@ -5,15 +5,17 @@
 	import { Input } from "$lib/components/ui/input/";
 	import * as Table from "$lib/components/ui/table";
 	import { Textarea } from "$lib/components/ui/textarea";
+	import { useUpdateNodeInternals } from "@xyflow/svelte";
 	import { EllipsisVertical, Plus, Trash2 } from "lucide-svelte";
 	import { dndzone } from "svelte-dnd-action";
 	import { flip } from "svelte/animate";
 
+	const updateInternals = useUpdateNodeInternals();
 	export let onDrop;
 	export let flipDurationMs = 300;
 	export let update = false;
 	export let Rows;
-	export let sub;
+	export let id;
 
 	function handleConsider(e) {
 		Rows = e.detail.items;
@@ -44,13 +46,16 @@
 		<Button
 			size="icon"
 			class="bg-transparent text-foreground border mb-5 hover:bg-accent transition-colors size-8 p-0 m-0"
-			on:click={() =>
+			on:click={() => {
 				Rows.push({
 					id: crypto.randomUUID(),
 					name: "",
 					value: "",
 					type: "let",
-				}) && (Rows = Rows)}
+				});
+				Rows = Rows;
+				updateInternals(id);
+			}}
 		>
 			<Plus />
 		</Button>
