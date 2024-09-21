@@ -94,7 +94,7 @@
 }
 
 .svelte-flow__edges {
-	@apply z-50;
+	/* @apply z-30; */
 	* {
 		@apply !stroke-zinc-700  !stroke-2;
 	}

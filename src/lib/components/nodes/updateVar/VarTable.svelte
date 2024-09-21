@@ -8,6 +8,7 @@
 	import { EllipsisVertical, Plus, Trash2 } from "lucide-svelte";
 	import { dndzone } from "svelte-dnd-action";
 	import { flip } from "svelte/animate";
+	import { v4 as uuidv4 } from "uuid";
 
 	export let onDrop;
 	export let flipDurationMs = 300;
@@ -44,7 +45,7 @@
 			size="icon"
 			class="bg-transparent text-foreground border mb-5 hover:bg-accent transition-colors size-8 p-0 m-0"
 			on:click={() =>
-				Rows.push({ id: crypto.randomUUID(), name: "", value: "" }) &&
+				Rows.push({ id: uuidv4(), name: "", value: "" }) &&
 				(Rows = Rows)}
 		>
 			<Plus />

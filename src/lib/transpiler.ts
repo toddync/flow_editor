@@ -1,7 +1,8 @@
 //@ts-nocheck
 const loops = ["ForNode", "WhileNode", "DoWhileNode"];
-const conditionals = ["IfNode"];
 const variables = ["VarNode", "UpdateVar"];
+const functions = ["FunctionNode"];
+const conditionals = ["IfNode"];
 let indentLvl = 0;
 
 export const Transpile = (N, E) => {
@@ -27,14 +28,10 @@ function Parse(n, t, N, E) {
 	if (loops.includes(n.node)) {
 		code += indent(indentLvl) + Loops(n, t, N, E);
 		indentLvl--;
-	}
-
-	if (conditionals.includes(n.node)) {
+	} else if (conditionals.includes(n.node)) {
 		code += indent(indentLvl) + Conditionals(n, t, N, E);
 		indentLvl--;
-	}
-
-	if (variables.includes(n.node)) {
+	} else if (variables.includes(n.node)) {
 		n.data.vars.map((v) => {
 			if (v.type) {
 				code += `${indent(indentLvl)}${v.type} ${v.name} = ${
@@ -44,8 +41,10 @@ function Parse(n, t, N, E) {
 				code += `${indent(indentLvl)}${v.name} = ${v.value};\n`;
 			}
 		});
+	} else if (functions.includes(n.node)) {
+		code += indent(indentLvl) + Functions(n, t, N, E);
+		indentLvl--;
 	}
-
 	E[`${t}---next`] &&
 		(code += Parse(N[E[`${t}---next`]], E[`${t}---next`], N, E));
 
@@ -104,6 +103,23 @@ function Conditionals(Node, id, N, E) {
 	return code;
 }
 
+function Functions(Node, id, N, E) {
+	let code = "";
+	indentLvl++;
+
+	if (Node.node.toLowerCase().includes("function")) {
+		code += `function ${Node.data.name}(${Node.data.params}){\n`;
+	}
+
+	if (N[E[`${id}---start`]]) {
+		code += Parse(N[E[`${id}---start`]], E[`${id}---start`], N, E);
+	}
+
+	code += indent(indentLvl - 1) + "}\n";
+
+	return code;
+}
+
 function normalize(T, V) {
 	let _ = {};
 	if (T == "N") {
@@ -120,10 +136,8 @@ function normalize(T, V) {
 
 function indent(lvl) {
 	let _ = "";
-	while (lvl > 0) {
+	for (let i = lvl; i > 0; i--) {
 		_ += "    ";
-		lvl--;
 	}
-
 	return _;
 }

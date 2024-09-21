@@ -5,51 +5,54 @@
 	import {
 		Position,
 		useHandleConnections,
-		useNodesData
+		useNodesData,
 	} from "@xyflow/svelte";
 	import Handle from "./Handle.svelte";
+	import Drag from "./Drag.svelte";
 
 	const connections = useHandleConnections({
 		nodeId: $$props.id,
-		type: "target"
+		type: "target",
 	});
 
 	$: nodesData = useNodesData(
-		$connections.map((connection) => connection.source)
+		$connections.map((connection) => connection.source),
 	);
 </script>
 
-<Glass>
-	<Handle type="target" position={Position.Top} class="left-1/2" />
-	<Card.Root>
-		<Card.Header class="grid gap-1">
-			{#if $nodesData}
-				{#each $nodesData as nodeData}
-					<Card.Description>
-						<table class="border mx-auto">
-							<thead class="*:border">
-								<th class="px-2 py-1">key</th>
-								<th class="px-2 py-1">value</th>
-							</thead>
-							<tbody>
-								{#each Object.keys(nodeData.data) as key}
-									<tr class="border *:border">
-										<td class="px-2 py-1">{key}</td>
-										<td
-											class="px-2 py-1 break-words whitespace-pre-wrap max-w-96"
-											>{JSON.stringify(
-												nodeData.data[key],
-												null,
-												4
-											)}</td
-										>
-									</tr>
-								{/each}
-							</tbody>
-						</table>
-					</Card.Description>
-				{/each}
-			{/if}
-		</Card.Header>
-	</Card.Root>
-</Glass>
+<Drag>
+	<Glass>
+		<Card.Root>
+			<Card.Header class="grid gap-1">
+				{#if $nodesData}
+					{#each $nodesData as nodeData}
+						<Card.Description>
+							<table class="border mx-auto">
+								<thead class="*:border">
+									<th class="px-2 py-1">key</th>
+									<th class="px-2 py-1">value</th>
+								</thead>
+								<tbody>
+									{#each Object.keys(nodeData.data) as key}
+										<tr class="border *:border">
+											<td class="px-2 py-1">{key}</td>
+											<td
+												class="px-2 py-1 break-words whitespace-pre-wrap max-w-96"
+												>{JSON.stringify(
+													nodeData.data[key],
+													null,
+													4,
+												)}</td
+											>
+										</tr>
+									{/each}
+								</tbody>
+							</table>
+						</Card.Description>
+					{/each}
+				{/if}
+			</Card.Header>
+		</Card.Root>
+		<Handle type="target" position={Position.Top} class="left-1/2" />
+	</Glass>
+</Drag>

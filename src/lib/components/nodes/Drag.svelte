@@ -1,3 +1,3 @@
-<div class="absolute inset-0 drag {$$props.class}">
+<div class="drag {$$props.class}">
 	<slot />
 </div>

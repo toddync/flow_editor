@@ -20,7 +20,8 @@
 		useNodes,
 		useSvelteFlow,
 	} from "@xyflow/svelte";
-	import { toSvg } from "html-to-image";
+	import { toSvg, toPng } from "html-to-image";
+	import { v4 as uuidv4 } from "uuid";
 
 	const { screenToFlowPosition } = useSvelteFlow();
 	const types = Object.keys($nodeTypes);
@@ -33,15 +34,14 @@
 			y: window.innerHeight / 2,
 		});
 
-		$Nodes.push({
-			id: crypto.randomUUID(),
+		$Nodes[$Nodes.length] = {
+			id: uuidv4(),
 			position: { x, y },
 			type: type,
 			dragHandle: ".drag",
 			data: {},
-		});
+		};
 
-		$Nodes = $Nodes;
 		close();
 	};
 
@@ -66,19 +66,17 @@
 		)!;
 
 		if (viewport) {
-			toSvg(viewportDomNode, {
+			toPng(viewportDomNode, {
+				backgroundColor: "#1a365d",
 				width: imageWidth,
 				height: imageHeight,
 				style: {
 					width: `${imageWidth}px`,
 					height: `${imageHeight}px`,
-					position: "absolute",
 					transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
-					// "background-image": `url("${document.URL}back.png")`,
 				},
 			}).then((dataUrl) => {
-				download(dataUrl, "svelte-flow.svg");
-				// console.log(decodeURIComponent(dataUrl));
+				download(dataUrl, "svelte-flow.png");
 			});
 		}
 	}
@@ -120,20 +118,6 @@
 		_.click();
 		close();
 	}
-
-	onMount(() => {
-		function handleKeydown(e) {
-			if (e.key.toLowerCase() == "k" && (e.metaKey || e.ctrlKey)) {
-				e.preventDefault();
-				$open = !$open;
-			}
-		}
-
-		document.addEventListener("keydown", handleKeydown);
-		return () => {
-			document.removeEventListener("keydown", handleKeydown);
-		};
-	});
 </script>
 
 <Command.Dialog bind:open={$open} class="bg-opacity-0 backdrop-blur-md">
@@ -143,6 +127,7 @@
 		<Command.Group heading="Nodes">
 			{#each types as type}
 				{#if type != "StartNode"}
+					<!-- onSelect={() => alert(type)} -->
 					<Command.Item onSelect={() => addNode(type)}>
 						<Node class="mr-2 h-4 w-4" />
 						<span>Add {type} </span>

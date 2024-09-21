@@ -2,16 +2,10 @@
 	//@ts-nocheck
 	import Handle from "$lib/components/nodes/Handle.svelte";
 	import * as Card from "$lib/components/ui/card";
-	import * as ContextMenu from "$lib/components/ui/context-menu";
 	import Input from "$lib/components/ui/input/input.svelte";
-	import { nodeTypes } from "$lib/stores/nodeTypes";
-	import { Nodes } from "$lib/stores/nodesStore";
 	import { NodeResizeControl, Position, useSvelteFlow } from "@xyflow/svelte";
 	import { ArrowRight, Expand, Play } from "lucide-svelte";
-	import Node from "lucide-svelte/icons/blocks";
 	import { onMount } from "svelte";
-
-	const sub = $$props.data.sub == true;
 
 	const iconClass =
 		"w-3.5 absolute translate-x-1/2 right-1/2 -translate-y-1/2 top-1/2";
@@ -20,24 +14,8 @@
 		W: $$props.width || 400,
 	};
 
-	const { flowToScreenPosition, updateNodeData } = useSvelteFlow();
+	const { updateNodeData } = useSvelteFlow();
 	const update = (x) => updateNodeData($$props.id, x);
-
-	const types = Object.keys($nodeTypes);
-	const addNode = (t) => {
-		$Nodes.push({
-			data: { sub: true },
-			extent: "parent",
-			position: flowToScreenPosition({
-				x: $$props.positionAbsoluteX,
-				y: $$props.positionAbsoluteY,
-			}),
-			type: t,
-			id: `${$$props.id}---${crypto.randomUUID()}`,
-			parentId: $$props.id,
-		});
-		$Nodes = $Nodes;
-	};
 
 	onMount(() => {
 		update({

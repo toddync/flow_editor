@@ -4,19 +4,21 @@
 	Sortable.mount(new Swap());
 
 	import "./assets/altFlow.css";
+	import Commands from "$lib/components/Commands.svelte";
+	import { Edges } from "$lib/stores/edgesStore";
+	import { Nodes } from "$lib/stores/nodesStore";
+	import { nodeTypes } from "$lib/stores/nodeTypes";
+	import Menu from "$lib/components/Menu.svelte";
+	import SmoothStep from "$lib/components/edges/SmoothStep.svelte";
 	import {
 		SvelteFlow,
 		Controls,
 		Background,
 		BackgroundVariant,
 		SvelteFlowProvider,
-		ConnectionLineType
+		ConnectionLineType,
 	} from "@xyflow/svelte";
-	import Commands from "$lib/components/Commands.svelte";
-	import { Edges } from "$lib/stores/edgesStore";
-	import { Nodes } from "$lib/stores/nodesStore";
-	import { nodeTypes } from "$lib/stores/nodeTypes";
-	import Menu from "$lib/components/Menu.svelte";
+	import Bindings from "$lib/Bindings.svelte";
 </script>
 
 <svelte:head>
@@ -24,23 +26,27 @@
 </svelte:head>
 
 <SvelteFlowProvider>
-	<div class="h-screen">
+	<div class="h-svh">
+		<!-- connectionLineType={ConnectionLineType.SmoothStep} -->
 		<SvelteFlow
 			colorMode="dark"
 			fitView
-			connectionLineType={ConnectionLineType.SmoothStep}
 			nodeTypes={$nodeTypes}
+			edgeTypes={{
+				smoothstep: SmoothStep,
+			}}
 			nodes={Nodes}
 			edges={Edges}
 			defaultEdgeOptions={{
-				type: "smoothstep"
+				type: "smoothstep",
 			}}
 		>
-			<Controls />
-			<Background variant={BackgroundVariant.Cross} size={6} gap={50} />
+			<!-- <Controls /> -->
+			<Background variant={BackgroundVariant.Lines} gap={50} />
 		</SvelteFlow>
 	</div>
 
+	<Bindings />
 	<Commands />
 	<Menu />
 </SvelteFlowProvider>
