@@ -1,30 +1,27 @@
 <script lang="ts">
 	//@ts-nocheck
+	import CodeDown from "$lib/In-Out/code";
+	import imageDown from "$lib/In-Out/img";
+	import JsonDown from "$lib/In-Out/json";
+	import restore from "$lib/In-Out/restore";
 	import * as Command from "$lib/components/ui/command/index.js";
 	import { showCommands as open } from "$lib/stores/ShowCommands.js";
+	import { Edges } from "$lib/stores/edgesStore";
+	import { nodeTypes } from "$lib/stores/nodeTypes";
+	import { Nodes } from "$lib/stores/nodesStore";
+	import { useNodes, useSvelteFlow } from "@xyflow/svelte";
 	import {
 		Code2,
 		CurlyBraces,
 		Image,
 		Blocks as Node,
 	} from "lucide-svelte/icons";
-	import { onMount } from "svelte";
-
-	import { Edges } from "$lib/stores/edgesStore";
-	import { nodeTypes } from "$lib/stores/nodeTypes";
-	import { Nodes } from "$lib/stores/nodesStore";
-	import { Transpile } from "$lib/transpiler";
-	import {
-		getNodesBounds,
-		getViewportForBounds,
-		useNodes,
-		useSvelteFlow,
-	} from "@xyflow/svelte";
-	import { toSvg, toPng } from "html-to-image";
 	import { v4 as uuidv4 } from "uuid";
 
+	const isTauri = "__TAURI_INTERNALS__" in window;
 	const { screenToFlowPosition } = useSvelteFlow();
 	const types = Object.keys($nodeTypes);
+	const nodes = useNodes();
 
 	const close = () => ($open = !$open);
 
@@ -41,81 +38,11 @@
 			dragHandle: ".drag",
 			data: {},
 		};
-
 		close();
 	};
 
-	const nodes = useNodes();
-	export function ImageDown() {
-		const scale = 2;
-		let imageWidth = 1024 * scale;
-		let imageHeight = 768 * scale;
-
-		const nodesBounds = getNodesBounds($nodes);
-		const viewport = getViewportForBounds(
-			nodesBounds,
-			imageWidth,
-			imageHeight,
-			0.5,
-			2.0,
-			0.9,
-		);
-
-		const viewportDomNode = document.querySelector(
-			".svelte-flow__viewport",
-		)!;
-
-		if (viewport) {
-			toPng(viewportDomNode, {
-				backgroundColor: "#1a365d",
-				width: imageWidth,
-				height: imageHeight,
-				style: {
-					width: `${imageWidth}px`,
-					height: `${imageHeight}px`,
-					transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
-				},
-			}).then((dataUrl) => {
-				download(dataUrl, "svelte-flow.png");
-			});
-		}
-	}
-
-	function CodeDown() {
-		download(
-			"data:text/plain;charset=utf-8," +
-				encodeURIComponent(Transpile($Nodes, $Edges)),
-			"svelte-flow.js",
-		);
-	}
-
-	function JsonDown() {
-		download(
-			"data:text/plain;charset=utf-8," +
-				encodeURIComponent(
-					JSON.stringify({ Nodes: $Nodes, Edges: $Edges }, null, 2),
-				),
-			"svelte-flow.json",
-		);
-	}
-
-	function restore(e) {
-		const reader = new FileReader();
-		reader.readAsText(e.target.files[0]);
-		reader.onload = function () {
-			let data = JSON.parse(reader.result);
-
-			$Nodes = data.Nodes;
-			$Edges = data.Edges;
-			close();
-		};
-	}
-
-	function download(ref, name) {
-		let _ = document.createElement("a");
-		_.setAttribute("href", ref);
-		_.setAttribute("download", name);
-		_.click();
+	async function load(e) {
+		({ Nodes: $Nodes, Edges: $Edges } = await restore(e));
 		close();
 	}
 </script>
@@ -137,15 +64,30 @@
 		</Command.Group>
 		<Command.Separator />
 		<Command.Group heading="Exports">
-			<Command.Item onSelect={ImageDown}>
+			<Command.Item
+				onSelect={() => {
+					imageDown($nodes);
+					close();
+				}}
+			>
 				<Image class="mr-2 h-4 w-4" />
 				<span>Download Flow as SVG</span>
 			</Command.Item>
-			<Command.Item onSelect={CodeDown}>
+			<Command.Item
+				onSelect={() => {
+					CodeDown($Nodes, $Edges);
+					close();
+				}}
+			>
 				<Code2 class="mr-2 h-4 w-4" />
 				<span>Download Flow as Code</span>
 			</Command.Item>
-			<Command.Item onSelect={JsonDown}>
+			<Command.Item
+				onSelect={() => {
+					JsonDown($Nodes, $Edges);
+					close();
+				}}
+			>
 				<CurlyBraces class="mr-2 h-4 w-4" />
 				<span>Download Flow as Json</span>
 			</Command.Item>
@@ -153,7 +95,13 @@
 		<Command.Separator />
 		<Command.Group heading="Import">
 			<Command.Item
-				onSelect={() => document.querySelector("#json").click()}
+				onSelect={() => {
+					if (isTauri) {
+						load(null);
+					} else {
+						document.querySelector("#json").click();
+					}
+				}}
 			>
 				<CurlyBraces class="mr-2 h-4 w-4" />
 				<span>Upload Flow from Json</span>
@@ -162,10 +110,4 @@
 	</Command.List>
 </Command.Dialog>
 
-<input
-	type="file"
-	class="sr-only"
-	id="json"
-	accept=".json"
-	on:change={restore}
-/>
+<input type="file" class="hidden" id="json" accept=".json" on:change={load} />

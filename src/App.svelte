@@ -18,7 +18,7 @@
 		SvelteFlowProvider,
 		ConnectionLineType,
 	} from "@xyflow/svelte";
-	import Bindings from "$lib/Bindings.svelte";
+	import Bindings from "$lib/components/Bindings.svelte";
 </script>
 
 <svelte:head>
