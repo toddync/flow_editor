@@ -47,14 +47,17 @@
 	}
 </script>
 
-<Command.Dialog bind:open={$open} class="bg-opacity-0 backdrop-blur-md">
+<Command.Dialog
+	bind:open={$open}
+	loop
+	class="backdrop-blur-md {(isTauri && 'bg-black/90') || 'bg-opacity-0'}"
+>
 	<Command.Input placeholder="Type a command or search..." />
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Nodes">
 			{#each types as type}
 				{#if type != "StartNode"}
-					<!-- onSelect={() => alert(type)} -->
 					<Command.Item onSelect={() => addNode(type)}>
 						<Node class="mr-2 h-4 w-4" />
 						<span>Add {type} </span>

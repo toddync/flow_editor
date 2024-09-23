@@ -7,12 +7,12 @@ import StartNode from "$lib/components/nodes/StartNode.svelte";
 import WhileNode from "$lib/components/nodes/While/WhileNode.svelte";
 import IfNode from "$lib/components/nodes/If/ifNode.svelte";
 import { UpdateVar } from "$lib/components/nodes/updateVar";
-import { VarNode } from "$lib/components/nodes/varNode";
+import { Variable } from "$lib/components/nodes/varNode";
 import { writable } from "svelte/store";
 
 export const nodeTypes = writable({
 	StartNode,
-	VarNode,
+	Variable,
 	UpdateVar,
 	IfNode,
 	ForNode,

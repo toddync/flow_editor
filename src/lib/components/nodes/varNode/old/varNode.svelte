@@ -10,14 +10,13 @@
 	} from "@xyflow/svelte";
 	import { ArrowRight } from "lucide-svelte";
 	import { onMount } from "svelte";
-	import Drag from "../Drag.svelte";
+	import Drag from "../../Drag.svelte";
 	import VarTable from "./VarTable.svelte";
 
 	const updateInternals = useUpdateNodeInternals();
 	const updateNodeData = useSvelteFlow().updateNodeData;
 	const update = (x) =>
-		(updateNodeData($$props.id, x) || 1) &&
-		console.log(updateInternals($$props.id));
+		(updateNodeData($$props.id, x) || 1) && updateInternals($$props.id);
 
 	let Rows = $$props.data.vars || [
 		{ id: 0, name: "", value: "", type: "let" },

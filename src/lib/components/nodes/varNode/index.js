@@ -1,2 +1,2 @@
-import VarNode from "./varNode.svelte";
-export { VarNode };
+import Variable from "./Variable.svelte";
+export { Variable };

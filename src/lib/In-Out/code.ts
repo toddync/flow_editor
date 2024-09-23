@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { Transpile } from "$lib/transpiler";
+import { Transpile } from "$lib/In-Out/transpiler";
 import download from "./download";
 
 const isTauri = "__TAURI_INTERNALS__" in window

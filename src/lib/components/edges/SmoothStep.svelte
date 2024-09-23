@@ -33,7 +33,6 @@
 	const edges = useEdges();
 
 	const onEdgeClick = () => {
-		console.log("e");
 		edges.update((eds) => eds.filter((edge) => edge.id !== id));
 	};
 </script>
