@@ -40,8 +40,8 @@
 <EdgeLabelRenderer>
 	<Button
 		size="icon"
-		style="transform: translate(-50%, -50%) translate({labelX}px, {labelY}px); z-index: 50; pointer-events: all;"
-		class="size-5 relative bg-black/10 backdrop-blur-md rounded-sm border text-foreground hover:bg-accent"
+		style="transform: translate(-50%, -50%) translate({labelX}px, {labelY}px); pointer-events: all;"
+		class="size-5 absolute bg-black/10 backdrop-blur-md rounded-sm border text-foreground hover:bg-accent z-50"
 		on:click={onEdgeClick}
 	>
 		<Trash2
