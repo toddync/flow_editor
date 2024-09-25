@@ -8,6 +8,8 @@
 	import { Types } from "$lib/stores/typesStore";
 	import {
 		Position,
+		useHandleConnections,
+		useNodesData,
 		useSvelteFlow,
 		useUpdateNodeInternals,
 	} from "@xyflow/svelte";
@@ -25,12 +27,16 @@
 	const updateInternals = useUpdateNodeInternals();
 	const updateNodeData = useSvelteFlow().updateNodeData;
 
+	$: update($data);
 	const update = (x) =>
 		(updateNodeData($$props.id, x) || 1) && updateInternals($$props.id);
 
-	$: {
-		update($data);
-	}
+	const InCon = useHandleConnections({
+		nodeId: $$props.id,
+		type: "target",
+		id: "prev",
+	});
+	$: console.log($InCon);
 </script>
 
 <Drag>
@@ -59,9 +65,10 @@
 						type="target"
 						position={Position.Left}
 						class="top-1/2 left-2.5"
+						handleClass={$InCon.length == 0 && "Out"}
 					>
 						<ArrowRight
-							class="w-3.5 absolute -translate-y-1/2 top-1/2 -left-2"
+							class="w-3.5 absolute -translate-y-1/2 top-1/2 -left-2 peer-[.Out]:opacity-0 !peer-[.valid]:opacity-100"
 						/>
 					</Handle>
 					<Handle

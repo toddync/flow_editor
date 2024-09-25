@@ -1,6 +1,7 @@
 <script lang="ts">
 	//@ts-nocheck
 	import { Handle } from "@xyflow/svelte";
+
 	const validate = (c) => {
 		const getGroup = (gId) => {
 			let _ = (gId as String).split("---");
@@ -24,14 +25,14 @@
 </script>
 
 <div
-	class="absolute -translate-y-1/2 -translate-x-1/2 size-5 place-items-center backdrop-blur-sm {$$props.class}"
+	class="absolute -translate-y-1/2 -translate-x-1/2 size-5 place-items-center {$$props.class}"
 >
-	<slot />
 	<Handle
+		id={$$props.id}
 		position={$$props.position}
 		type={$$props.type}
-		id={$$props.id}
 		isValidConnection={$$props.isValidConnection || validate}
-		class="bg-transparent rounded-sm z-50 w-full h-full -translate-y-1/2 top-1/2 -translate-x-1/2 -right-1/2 {$$props.handleClass}"
+		class="bg-black/10 rounded-sm z-50 w-full h-full -translate-y-1/2 top-1/2 -translate-x-1/2 -right-1/2 {$$props.handleClass} peer"
 	/>
+	<slot />
 </div>

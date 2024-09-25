@@ -132,3 +132,11 @@
 .border {
 	@apply !border-[1px];
 }
+
+.Out {
+	@apply opacity-0;
+}
+
+.valid {
+    @apply !opacity-100;
+}
