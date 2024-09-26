@@ -1,6 +1,6 @@
 //@ts-nocheck
 const loops = ["ForNode", "WhileNode", "DoWhileNode"];
-const variables = ["VarNode", "UpdateVar"];
+const variables = ["VarNode", "UpdateVar", "Variable"];
 const functions = ["FunctionNode"];
 const conditionals = ["IfNode"];
 let indentLvl = 0;
@@ -32,15 +32,9 @@ function Parse(n, t, N, E) {
 		code += indent(indentLvl) + Conditionals(n, t, N, E);
 		indentLvl--;
 	} else if (variables.includes(n.node)) {
-		n.data.vars.map((v) => {
-			if (v.type) {
-				code += `${indent(indentLvl)}${v.type} ${v.name} = ${
-					v.value
-				};\n`;
-			} else {
-				code += `${indent(indentLvl)}${v.name} = ${v.value};\n`;
-			}
-		});
+        code += `${indent(indentLvl)}${n.data.const ? "const" : "let"} ${n.data.name} = ${
+            n.data.value
+        };\n`;
 	} else if (functions.includes(n.node)) {
 		code += indent(indentLvl) + Functions(n, t, N, E);
 		indentLvl--;

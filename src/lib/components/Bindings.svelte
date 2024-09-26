@@ -3,6 +3,7 @@
 	import { showCommands as open } from "$lib/stores/ShowCommands.js";
 	import { useSvelteFlow } from "@xyflow/svelte";
 	import { onMount } from "svelte";
+	import Recorder from "./recorder.svelte";
 	const { zoomIn, zoomOut, fitView } = useSvelteFlow();
 
 	onMount(() => {
@@ -28,3 +29,5 @@
 		return () => document.removeEventListener("keydown", handleKeydown);
 	});
 </script>
+
+<!-- <Recorder /> -->

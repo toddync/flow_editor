@@ -36,7 +36,6 @@
 		type: "target",
 		id: "prev",
 	});
-	$: console.log($InCon);
 </script>
 
 <Drag>
@@ -68,14 +67,14 @@
 						handleClass={$InCon.length == 0 && "Out"}
 					>
 						<ArrowRight
-							class="w-3.5 absolute -translate-y-1/2 top-1/2 -left-2 peer-[.Out]:opacity-0 !peer-[.valid]:opacity-100"
+							class="w-3.5 absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2"
 						/>
 					</Handle>
 					<Handle
 						id="next"
 						type="source"
 						position={Position.Right}
-						class="top-1/2 -right-5"
+						class="top-1/2 -right-5 -translate-x-1/2"
 					>
 						<ArrowRight
 							class="w-3.5 absolute -translate-y-1/2 top-1/2 left-0.5"
