@@ -7,7 +7,7 @@
 	export let videoBitrate: number = 2000;
 	export let audioBitrate: number = 320;
 	export let systemAudio: boolean = true;
-	export let useMicrophone: boolean = true;
+	export const useMicrophone: boolean = true;
 	export let useTimer: boolean = true;
 
 	type State = "ready" | "ready.countdown" | "recording";

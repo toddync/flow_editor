@@ -1,10 +1,10 @@
 <script lang="ts">
 	//@ts-nocheck
+	import { Nodes } from "$lib/stores/nodesStore";
 	import { Handle } from "@xyflow/svelte";
 
 	const getGroup = (gId) => {
 		let _ = (gId as String).split("---");
-
 		if (typeof _ == "object") {
 			if (_?.length > 1) {
 				_.pop();
@@ -13,14 +13,19 @@
 				return _.pop();
 			}
 		}
-
 		return _;
 	};
 
 	const validate = (c) => {
-		return c.target.includes("---") || c.source.includes("---")
-			? getGroup(c.source) == getGroup(c.target)
-			: true;
+		let prev = $Nodes.filter((v) => v.id == c.source)?.[0];
+		let next = $Nodes.filter((v) => v.id == c.target)?.[0];
+		if (prev.data.cgroup || next.data.cgroup) {
+		} else {
+			return true;
+		}
+		// return c.target.includes("---") || c.source.includes("---")
+		// 	? c.cgroup == c.target
+		// 	: true;
 	};
 </script>
 

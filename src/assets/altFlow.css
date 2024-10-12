@@ -68,7 +68,7 @@
 
     --xy-background-color-default: #000000;
     --xy-background-pattern-dots-color-default: #ffffff;
-    --xy-background-pattern-lines-color-default: rgba(240, 240, 240, 0.15);
+    --xy-background-pattern-lines-color-default: rgba(240, 240, 240, 0.1);
     --xy-background-pattern-cross-color-default: #ffffff;
     --xy-node-color-default: #f8f8f8;
     --xy-node-border-default: 1px solid #3c3c3c;

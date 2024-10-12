@@ -16,6 +16,7 @@
 	import { ArrowRight, Equal } from "lucide-svelte";
 	import { writable } from "svelte/store";
 	import Drag from "../Drag.svelte";
+	import Base from "../Base.svelte";
 
 	const data = writable({
 		value: 0,
@@ -38,10 +39,11 @@
 	});
 </script>
 
-<Drag>
+<Base id={$$props.id}>
+	<!-- <Drag> -->
 	<ContextMenu.Root>
 		<ContextMenu.Trigger>
-			<Glass class="max-w-m">
+			<Glass class="max-w-m  drag">
 				<Card.Root class="rounded-lg">
 					<Card.Header display="flex ">
 						<Card.Content class="flex gap-2 p-0 *:my-auto">
@@ -106,4 +108,5 @@
 			</ContextMenu.RadioGroup>
 		</ContextMenu.Content>
 	</ContextMenu.Root>
-</Drag>
+	<!-- </Drag> -->
+</Base>

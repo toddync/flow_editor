@@ -19,15 +19,14 @@
 		ConnectionLineType,
 	} from "@xyflow/svelte";
 	import Bindings from "$lib/components/Bindings.svelte";
+	import Recorder from "$lib/components/recorder.svelte";
 </script>
 
 <svelte:head>
 	<title>Flow Editor</title>
 </svelte:head>
-
 <SvelteFlowProvider>
 	<div class="h-svh">
-		<!-- connectionLineType={ConnectionLineType.SmoothStep} -->
 		<SvelteFlow
 			colorMode="dark"
 			fitView
@@ -41,7 +40,6 @@
 				type: "smoothstep",
 			}}
 		>
-			<!-- <Controls /> -->
 			<Background variant={BackgroundVariant.Lines} gap={50} />
 		</SvelteFlow>
 	</div>

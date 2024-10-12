@@ -9,6 +9,7 @@
 	} from "@xyflow/svelte";
 	import Handle from "./Handle.svelte";
 	import Drag from "./Drag.svelte";
+	import { flip } from "svelte/animate";
 
 	const connections = useHandleConnections({
 		nodeId: $$props.id,
@@ -23,9 +24,15 @@
 <Drag>
 	<Glass>
 		<Card.Root>
-			<Card.Header class="grid gap-1">
+			<Card.Header class="flex flex-col gap-2 text-xs font-jb">
 				{#if $nodesData}
-					{#each $nodesData as nodeData}
+					{#each $nodesData as nodeData, i}
+						{#if i > 0}
+							<div class="h-0.5 rounded bg-muted-foreground/20" />
+						{/if}
+						<pre>{JSON.stringify(nodeData.data, null, 2)}</pre>
+					{/each}
+					<!-- {#each $nodesData as nodeData}
 						<Card.Description>
 							<table class="border mx-auto">
 								<thead class="*:border">
@@ -49,10 +56,10 @@
 								</tbody>
 							</table>
 						</Card.Description>
-					{/each}
+					{/each} -->
 				{/if}
 			</Card.Header>
 		</Card.Root>
-		<Handle type="target" position={Position.Top} class="left-1/2" />
+		<Handle type="target" position={Position.Bottom} class="left-1/2" />
 	</Glass>
 </Drag>

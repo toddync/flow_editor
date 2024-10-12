@@ -140,3 +140,36 @@
 .valid {
     @apply !opacity-100;
 }
+
+.svelte-flow__selection{
+    @apply !border-solid rounded-md !border-[1px] !border-orange-700/30 !bg-orange-700/5 ;
+}
+
+.selection-wrapper *{
+    @apply !scale-110;
+}
+
+.svelte-flow__node{
+    height: 1px;
+
+    /* position: relative; */
+}
+
+.font-jb{
+    font-family: "JetBrains Mono", monospace;
+}
+
+.hide-first > :first-child {
+    display: none
+}
+.hide-second > :nth-child(2) {
+    display: none
+}
+
+.fn :nth-child(3), .fn :nth-child(4){
+    display: none
+}
+
+.fn{
+    margin-right: -6px;
+}

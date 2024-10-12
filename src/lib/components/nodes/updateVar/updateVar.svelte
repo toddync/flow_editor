@@ -2,7 +2,6 @@
 	//@ts-nocheck
 	import Handle from "$lib/components/nodes/Handle.svelte";
 	import { Position, useSvelteFlow } from "@xyflow/svelte";
-
 	import Glass from "$lib/components/Glass.svelte";
 	import * as Card from "$lib/components/ui/card";
 	import { ArrowRight } from "lucide-svelte";

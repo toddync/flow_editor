@@ -1,6 +1,6 @@
 //@ts-nocheck
-const loops = ["ForNode", "WhileNode", "DoWhileNode"];
 const variables = ["VarNode", "UpdateVar", "Variable"];
+const loops = ["ForNode", "WhileNode", "DoWhileNode"];
 const functions = ["FunctionNode"];
 const conditionals = ["IfNode"];
 let indentLvl = 0;

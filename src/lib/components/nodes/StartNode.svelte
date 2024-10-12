@@ -1,24 +1,23 @@
 <script lang="ts">
-	//@ts-ignore
+	//@ts-nocheck
+	import { Nodes } from "$lib/stores/nodesStore";
+	import { Position } from "@xyflow/svelte";
+	import { ArrowRight, Play } from "lucide-svelte";
+	import { onMount } from "svelte";
 	import Glass from "../Glass.svelte";
 	import * as Card from "../ui/card";
-	import { ArrowRight, Expand, Play } from "lucide-svelte";
 	import Handle from "./Handle.svelte";
-	import { Position } from "@xyflow/svelte";
-	import { onMount } from "svelte";
-	import { Nodes } from "$lib/stores/nodesStore";
 
 	onMount(() => () => {
-		if (!($Nodes as Array<any>).find((v) => v.id == "StartNode"))
-			$Nodes.push({
-				type: "StartNode",
-				id: "StartNode",
-				data: {},
-				position: {
-					x: 0,
-					y: 0
-				}
-			});
+		$Nodes.push({
+			type: "StartNode",
+			id: "StartNode",
+			data: {},
+			position: {
+				x: 0,
+				y: 0,
+			},
+		});
 		$Nodes = $Nodes;
 	});
 </script>

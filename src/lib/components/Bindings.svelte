@@ -1,10 +1,10 @@
 <script>
 	//@ts-nocheck
 	import { showCommands as open } from "$lib/stores/ShowCommands.js";
+	import { zoom } from "$lib/stores/zoomStore";
 	import { useSvelteFlow } from "@xyflow/svelte";
 	import { onMount } from "svelte";
-	import Recorder from "./recorder.svelte";
-	const { zoomIn, zoomOut, fitView } = useSvelteFlow();
+	const { zoomIn, zoomOut, fitView, viewport } = useSvelteFlow();
 
 	onMount(() => {
 		function handleKeydown(e) {
@@ -28,6 +28,8 @@
 		document.addEventListener("keydown", handleKeydown);
 		return () => document.removeEventListener("keydown", handleKeydown);
 	});
+
+	$: $zoom = $viewport.zoom;
 </script>
 
 <!-- <Recorder /> -->

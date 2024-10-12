@@ -1,10 +1,10 @@
 <script lang="ts">
 	//@ts-check
+	import { zoom } from "$lib/stores/zoomStore";
 	import {
 		BaseEdge,
 		EdgeLabelRenderer,
 		getBezierPath,
-		getSmoothStepPath,
 		useEdges,
 		type EdgeProps,
 	} from "@xyflow/svelte";
@@ -37,17 +37,19 @@
 	};
 </script>
 
-<EdgeLabelRenderer>
-	<Button
-		size="icon"
-		style="transform: translate(-50%, -50%) translate({labelX}px, {labelY}px); pointer-events: all;"
-		class="size-5 absolute bg-black/10 backdrop-blur-md rounded-sm border text-foreground hover:bg-accent z-50"
-		on:click={onEdgeClick}
-	>
-		<Trash2
-			class="absolute w-3.5 -translate-y-1/2 top-1/2 -translate-x-1/2 left-1/2 text-red-600/80"
-		/>
-	</Button>
-</EdgeLabelRenderer>
+{#if $zoom > 0.85}
+	<EdgeLabelRenderer>
+		<Button
+			size="icon"
+			style="transform: translate(-50%, -50%) translate({labelX}px, {labelY}px); pointer-events: all;"
+			class="size-5 absolute bg-black/10 backdrop-blur-md rounded-sm border text-foreground hover:bg-accent z-50"
+			on:click={onEdgeClick}
+		>
+			<Trash2
+				class="absolute w-3 -translate-y-1/2 top-1/2 -translate-x-1/2 left-1/2 text-red-600/80"
+			/>
+		</Button>
+	</EdgeLabelRenderer>
+{/if}
 
 <BaseEdge path={edgePath} />
