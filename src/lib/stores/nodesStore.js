@@ -4,7 +4,9 @@ export const Nodes = writable([
 	{
 		type: "StartNode",
 		id: "StartNode",
-		data: {},
+		data: {
+			context: "GLOBAL"
+		},
 		position: {
 			x: 0,
 			y: 0,

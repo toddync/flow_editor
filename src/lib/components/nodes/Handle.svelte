@@ -1,32 +1,44 @@
 <script lang="ts">
 	//@ts-nocheck
 	import { Nodes } from "$lib/stores/nodesStore";
-	import { Handle } from "@xyflow/svelte";
+	import { Handle, useSvelteFlow } from "@xyflow/svelte";
 
-	const getGroup = (gId) => {
-		let _ = (gId as String).split("---");
-		if (typeof _ == "object") {
-			if (_?.length > 1) {
-				_.pop();
-				return _.join("---");
-			} else {
-				return _.pop();
-			}
-		}
-		return _;
-	};
+	const { updateNodeData } = useSvelteFlow();
+	const update = (x, y) => updateNodeData(x, y);
 
 	const validate = (c) => {
 		let prev = $Nodes.filter((v) => v.id == c.source)?.[0];
 		let next = $Nodes.filter((v) => v.id == c.target)?.[0];
-		if (prev.data.cgroup || next.data.cgroup) {
-		} else {
+
+		if (prev.data.context || next.data.context) {
+			if(prev.data.context && !next.data.context)
+				return true;
+			else if (prev.data.context == next.data.context)
+				return true;
+		} else
 			return true;
+		return false;
+	}
+
+	const connect = ([c]) => {
+		let prev = $Nodes.filter((v) => v.id == c.source)?.[0];
+		let next = $Nodes.filter((v) => v.id == c.target)?.[0];
+
+		console.log(prev?.data.context && !next?.data.context, 1)
+
+		if(prev?.data.context != "" && !next?.data.context){
+			update(next.id, {context: prev.data.context})
+			console.log(prev.data.context)
 		}
-		// return c.target.includes("---") || c.source.includes("---")
-		// 	? c.cgroup == c.target
-		// 	: true;
-	};
+	}
+
+	const disconnect = ([c]) => {
+		let prev = $Nodes.filter((v) => v.id == c.source)?.[0];
+		let next = $Nodes.filter((v) => v.id == c.target)?.[0];
+
+		if(prev?.data?.context && next?.data?.context)
+			update(next.id, {context: ""})
+	}
 </script>
 
 <div
@@ -37,6 +49,8 @@
 		position={$$props.position}
 		type={$$props.type}
 		isValidConnection={$$props.isValidConnection || validate}
+		onconnect={connect}
+		ondisconnect={disconnect}
 		class="bg-black/10 rounded-sm backdrop-blur-md  w-full h-full -translate-y-1/2 top-1/2 -translate-x-1/2 -right-1/2 *:pointer-events-none {$$props.handleClass}"
 	>
 		<slot />
