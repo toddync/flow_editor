@@ -74,7 +74,7 @@
 				}}
 			>
 				<Image class="mr-2 h-4 w-4" />
-				<span>Download Flow as SVG</span>
+				<span>Download Flow as a PNG</span>
 			</Command.Item>
 			<Command.Item
 				onSelect={() => {

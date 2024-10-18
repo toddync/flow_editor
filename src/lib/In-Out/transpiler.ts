@@ -1,137 +1,117 @@
-//@ts-nocheck
-const variables = ["VarNode", "UpdateVar", "Variable"];
-const loops = ["ForNode", "WhileNode", "DoWhileNode"];
-const functions = ["FunctionNode"];
-const conditionals = ["IfNode"];
-let indentLvl = 0;
+import js from "./js";
 
-export const Transpile = (N, E) => {
-	console.clear();
-	let code = "";
-	let next = "StartNode---next";
-	N = normalize("N", N);
-	E = normalize("E", E);
+// Define the types for node structures
+export interface Node {
+    id: string;
+    type: string;
+    data: {
+        name?: string;
+        value?: string;
+        const?: boolean;
+        condition?: string;
+        initialization?: string;
+        refresh?: string;
+        params?: {id: string, name: string}[];
+    };
+}
 
-	let t = E[next];
-	next = t && `${t}---next`;
+export interface Edge {
+    source: string;
+    sourceHandle: string;
+    target: string;
+}
 
-	let n = N[t];
-	code = Parse(n, t, N, E);
+export interface NodeMap {
+    [id: string]: Node; // Maps node IDs to Node objects
+}
 
-	console.log(code);
-	return code;
+export interface EdgeMap {
+    [key: string]: string; // Maps edge keys (e.g., "source---handle") to target node IDs
+}
+
+/**
+ * Transpiles the node and edge data into JavaScript code.
+ * @param N - The node array.
+ * @param E - The edge array.
+ * @returns The generated JavaScript code as a string.
+ */
+export function Transpile(N: Node[], E: Edge[]): string {
+    console.clear();
+    let code: string = "";
+    let next: string = "StartNode---next";
+
+    // Normalize nodes and edges
+    let {Nm, Em} = Normalize(N, E);
+
+    let t: string = Em[next];
+    next = t && `${t}---next`;
+
+    // Check if the next node exists
+    if (!Nm[t]) {
+        console.error(`Error: Node ${t} not found.`);
+        return "";
+    }
+
+    let n: Node = Nm[t];
+    code = Parse(n, t, Nm, Em);
+
+    console.log(code);
+    return code;
 };
 
-function Parse(n, t, N, E) {
-	let code = "";
+/**
+ * Parses a node and generates corresponding code.
+ * @param n - The current node.
+ * @param t - The current node's ID.
+ * @param N - The node map.
+ * @param E - The edge map.
+ * @returns The generated code as a string.
+ */
+export function Parse(n: Node, t: string, N: NodeMap, E: EdgeMap, indent: number = 0): string {
+    let code: string = "";
 
-	if (loops.includes(n.node)) {
-		code += indent(indentLvl) + Loops(n, t, N, E);
-		indentLvl--;
-	} else if (conditionals.includes(n.node)) {
-		code += indent(indentLvl) + Conditionals(n, t, N, E);
-		indentLvl--;
-	} else if (variables.includes(n.node)) {
-        code += `${indent(indentLvl)}${n.data.const ? "const" : "let"} ${n.data.name} = ${
-            n.data.value
-        };\n`;
-	} else if (functions.includes(n.node)) {
-		code += indent(indentLvl) + Functions(n, t, N, E);
-		indentLvl--;
-	}
-	E[`${t}---next`] &&
-		(code += Parse(N[E[`${t}---next`]], E[`${t}---next`], N, E));
+    js.forEach( parser => {
+        if(parser.valid.includes(n.type)){
+            code += Indent(indent) + parser.parse(n, t, N, E, indent)
+        }
+    })
 
-	return code;
+    // Check for next node
+    const nextNodeKey = `${t}---next`;
+    if (E[nextNodeKey]) {
+        code += Parse(N[E[nextNodeKey]], E[nextNodeKey], N, E, indent);
+    }
+
+    return code;
 }
 
-function Loops(Node, id, N, E) {
-	let code = "";
-	indentLvl++;
-	if (Node.node == "ForNode") {
-		code += `for(${Node.data.initialization}; ${Node.data.condition}; ${Node.data.refresh}){\n`;
-	}
+/**
+ * Normalizes node and edge data into a more manageable format.
+ * @param N - The array of nodes.
+ * @param E - The array of edges.
+ * @returns The mapped data as an object.
+ */
+export function Normalize(N: Node[], E: Edge[]): {Nm: NodeMap, Em: EdgeMap} {
+    let Em: EdgeMap = {};
+    let Nm: NodeMap = {};
 
-	if (Node.node == "WhileNode") {
-		code += `while(${Node.data.condition}){\n`;
-	}
+    N.forEach((e: Node) => Nm[e.id] = { id: e.id, data: e.data, type: e.type });
 
-	if (Node.node == "DoWhileNode") {
-		code += `do{\n`;
-	}
-
-	if (N[E[`${id}---start`]]) {
-		code += Parse(N[E[`${id}---start`]], E[`${id}---start`], N, E);
-	}
-
-	if (Node.node == "DoWhileNode") {
-		code += indent(indentLvl - 1) + `} while(${Node.data.condition})\n`;
-	} else {
-		code += indent(indentLvl - 1) + "}\n";
-	}
-
-	return code;
+    E.forEach((e) => Em[`${e.source}---${e.sourceHandle}`] = e.target);
+    
+    return {Nm, Em};
 }
 
-function Conditionals(Node, id, N, E) {
-	let code = "";
-	indentLvl++;
-	if (Node.node.toLowerCase().includes("if")) {
-		code += `if(${Node.data.condition}){\n`;
-	}
-
-	if (N[E[`${id}---true`]]) {
-		code += Parse(N[E[`${id}---true`]], E[`${id}---true`], N, E);
-	}
-
-	code += indent(indentLvl - 1) + "}";
-
-	if (N[E[`${id}---false`]]) {
-		code += " else {\n";
-		code += Parse(N[E[`${id}---false`]], E[`${id}---false`], N, E);
-		code += indent(indentLvl - 1) + "}\n";
-	} else {
-		code += "\n";
-	}
-
-	return code;
-}
-
-function Functions(Node, id, N, E) {
-	let code = "";
-	indentLvl++;
-
-	if (Node.node.toLowerCase().includes("function")) {
-		code += `function ${Node.data.name}(${Node.data.params}){\n`;
-	}
-
-	if (N[E[`${id}---start`]]) {
-		code += Parse(N[E[`${id}---start`]], E[`${id}---start`], N, E);
-	}
-
-	code += indent(indentLvl - 1) + "}\n";
-
-	return code;
-}
-
-function normalize(T, V) {
-	let _ = {};
-	if (T == "N") {
-		V.forEach((e) => {
-			_[e.id] = { data: e.data, node: e.type };
-		});
-	} else if (T == "E") {
-		V.forEach((e) => {
-			_[`${e.source}---${e.sourceHandle}`] = e.target;
-		});
-	}
-	return _;
-}
-
-function indent(lvl) {
-	let _ = "";
-	for (let i = lvl; i > 0; i--) {
-		_ += "    ";
-	}
-	return _;
+/**
+ * Generates indentation based on the current level.
+ * @param lvl - The current indentation level.
+ * @returns The indentation string.
+ */
+export function Indent(lvl: number): string {
+    let indentation = "";
+    console.log(lvl)
+    for (let i = 0; i < lvl; i++) {
+        indentation += "    "; // 4 spaces for each level
+    }
+    return indentation;
 }

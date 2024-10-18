@@ -149,11 +149,6 @@
     @apply !scale-110;
 }
 
-.svelte-flow__node{
-    height: 1px;
-
-    /* position: relative; */
-}
 
 .font-jb{
     font-family: "JetBrains Mono", monospace;

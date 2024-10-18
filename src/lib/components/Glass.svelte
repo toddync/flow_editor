@@ -5,7 +5,7 @@
 <span class="hidden bg-black/60" />
 <div
 	class="
-		backdrop-blur-sm bg-clip-padding backdrop-filter bg-black{isTauri
+		backdrop-blur-sm bg-clip-padding rounded-md backdrop-filter bg-black{isTauri
 		? '/60'
 		: '/10'} *:bg-transparent {$$props.class}"
 >
