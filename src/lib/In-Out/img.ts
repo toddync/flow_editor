@@ -7,7 +7,7 @@ import { toPng } from "html-to-image";
 import download from "./download";
 
 function imageDown(nodes){
-		const scale = 2;
+		const scale = 1;
 		let imageWidth = 1024 * scale;
 		let imageHeight = 768 * scale;
 
@@ -18,7 +18,7 @@ function imageDown(nodes){
 			imageHeight,
 			0.5,
 			2.0,
-			0.9,
+			0.2
 		);
 
 		const viewportDomNode = document.querySelector(
@@ -27,15 +27,20 @@ function imageDown(nodes){
 
 		if (viewport) {
 			toPng(viewportDomNode, {
-				backgroundColor: "#fff",
+				backgroundColor: "#000",
 				width: imageWidth,
 				height: imageHeight,
+				quality: 1,
+				pixelRatio: 4,
 				style: {
 					width: `${imageWidth}px`,
 					height: `${imageHeight}px`,
 					transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
-				},
-			}).then((dataUrl) => {
+					// "background-image": "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)",
+					// "background-size": "50px 50px",
+				}
+			  })
+			.then((dataUrl) => {
 				download(dataUrl, "svelte-flow.png", true);
 			});
 		}

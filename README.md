@@ -16,15 +16,15 @@ Scratch successfully abstracted many complexities for young learners, but blocks
 
 Nodes offer a more intuitive way to visualize data flow. By following the connections and arrows between nodes, users can easily trace how data moves from one point to another. This level of visualization is something Scratch couldn’t fully achieve, and nodes provide an improved mechanism for organizing complex logic.
 
-## How does it work?
+### How does it work?
 
-The web interface allows you to add nodes and connect them using edges. Currently, the web interface supports exporting your Flow as an SVG (to maintain quality), so you can use it for presentations, code explanations, or even as decoration—your choice.
+The application allows you to add nodes and connect them with edges, creating a clear visual representation of your Flow. Once everything is in place, the compiler takes over and does the heavy lifting. It processes the nodes, organizes the structure, and uses node metadata (accessible by connecting any node to a logger node) to generate the final code.
 
-Once the Flow is designed, the transpiler  takes over. It processes the nodes, organizes the structure, and uses node metadata (viewable by connecting any node to a logger node) to generate the final code. At the moment, the transpiler only outputs JavaScript. While templates are modular and could theoretically support other languages, there is no guarantee of future support for heavily typed languages like Rust.
+At the moment, the compiler outputs JavaScript—because, well, JavaScript seems to have its hands in everything. The templating system is modular and can potentially support other languages in the future, though don’t expect Rust anytime soon. The generated code is structured based on your node connections, making it easy to review, adjust, and use directly in your projects.
 
 ### Why templates?
 
-Templates are key to making the code modular and easily extensible. They allow for future growth by enabling users to add support for languages that are not currently integrated, but for now, the only available output is JavaScript.
+Templates are key to making the code modular and easily extensible. They allow for future growth by enabling users to add new nodes or support for languages that are not currently integrated.
 
 ---
 
@@ -46,9 +46,9 @@ Templates are key to making the code modular and easily extensible. They allow f
     - [X]  While
     - [X]  Do While
   - [ ]  Functions
-    - [ ]  Declaration
+    - [X]  Declaration
     - [ ]  Calling
 - [X]  Exports
-  - [X]  Image (SVG)
+  - [X]  Image
   - [X]  JSON schema
   - [X]  Source code (JavaScript)
