@@ -29,8 +29,7 @@
 	const updateNodeData = useSvelteFlow().updateNodeData;
 
 	$: update($data);
-	const update = (x) =>
-		(updateNodeData($$props.id, x) || 1) && updateInternals($$props.id);
+	const update = (x) => (updateNodeData($$props.id, x) || 1) && updateInternals($$props.id);
 
 	const InCon = useHandleConnections({
 		nodeId: $$props.id,
@@ -40,73 +39,73 @@
 </script>
 
 <Base id={$$props.id}>
-	<!-- <Drag> -->
-	<ContextMenu.Root>
-		<ContextMenu.Trigger>
-			<Glass class="max-w-m  drag">
-				<Card.Root class="rounded-lg">
-					<Card.Header display="flex ">
-						<Card.Content class="flex gap-2 p-0 *:my-auto">
-							<span class="text-lg mx-auto">
-								{$data.name}
-							</span>
-							<span
-								class="text-xs text-muted-foreground capitalize"
-							>
-								: {$data.type}
-							</span>
-							<Equal class="size-3" />
-							<span class="text-lg">
-								{$data.value}
-							</span>
-						</Card.Content>
-					</Card.Header>
-					<Handle
-						id="prev"
-						type="target"
-						position={Position.Left}
-						class="top-1/2 left-2.5"
-						handleClass={$InCon.length == 0 && "Out"}
-					>
-						<ArrowRight
-							class="w-3.5 absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2"
-						/>
-					</Handle>
-					<Handle
-						id="next"
-						type="source"
-						position={Position.Right}
-						class="top-1/2 -right-5 -translate-x-1/2"
-					>
-						<ArrowRight
-							class="w-3.5 absolute -translate-y-1/2 top-1/2 left-0.5"
-						/>
-					</Handle>
-				</Card.Root>
-			</Glass>
-		</ContextMenu.Trigger>
+	<Drag>
+		<ContextMenu.Root>
+			<ContextMenu.Trigger>
+				<Glass>
+					<Card.Root class="rounded-lg">
+						<Card.Header class="flex">
+							<Card.Content class="flex gap-2 p-0 *:my-auto">
+								<span class="text-lg mx-auto">
+									{$data.name}
+								</span>
+								<span
+									class="text-xs text-muted-foreground capitalize"
+								>
+									: {$data.type}
+								</span>
+								<Equal class="size-3" />
+								<span class="text-lg">
+									{$data.value}
+								</span>
+							</Card.Content>
+						</Card.Header>
+						<Handle
+							id="prev"
+							type="target"
+							position={Position.Left}
+							class="top-1/2 left-2.5"
+							handleClass={$InCon.length == 0 && "Out"}
+						>
+							<ArrowRight
+								class="w-3.5 absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2"
+							/>
+						</Handle>
+						<Handle
+							id="next"
+							type="source"
+							position={Position.Right}
+							class="top-1/2 -right-5 -translate-x-1/2"
+						>
+							<ArrowRight
+								class="w-3.5 absolute -translate-y-1/2 top-1/2 left-0.5"
+							/>
+						</Handle>
+					</Card.Root>
+				</Glass>
+			</ContextMenu.Trigger>
 
-		<ContextMenu.Content class="bg-black/70 overflow-scroll max-h-[50svh]">
-			<ContextMenu.Label>Name</ContextMenu.Label>
-			<Input class="mb-3" bind:value={$data.name} />
-			<ContextMenu.Separator />
-			<ContextMenu.Label>Value</ContextMenu.Label>
-			<Input class="mb-3" bind:value={$data.value} />
-			<ContextMenu.Separator />
-			<ContextMenu.CheckboxItem bind:checked={$data.const}>
-				Constant
-			</ContextMenu.CheckboxItem>
-			<ContextMenu.Separator />
-			<ContextMenu.RadioGroup bind:value={$data.type}>
-				<ContextMenu.Label>Type</ContextMenu.Label>
+			<ContextMenu.Content class="bg-black/70 overflow-scroll max-h-[50svh]">
+				<ContextMenu.Label>Name</ContextMenu.Label>
+				<Input class="mb-3" bind:value={$data.name} />
 				<ContextMenu.Separator />
-				{#each Object.keys($Types) as type}
-					<ContextMenu.RadioItem value={type} class="capitalize">
-						{type}
-					</ContextMenu.RadioItem>
-				{/each}
-			</ContextMenu.RadioGroup>
-		</ContextMenu.Content>
-	</ContextMenu.Root>
-	<!-- </Drag> -->
+				<ContextMenu.Label>Value</ContextMenu.Label>
+				<Input class="mb-3" bind:value={$data.value} />
+				<ContextMenu.Separator />
+				<ContextMenu.CheckboxItem bind:checked={$data.const}>
+					Constant
+				</ContextMenu.CheckboxItem>
+				<ContextMenu.Separator />
+				<ContextMenu.RadioGroup bind:value={$data.type}>
+					<ContextMenu.Label>Type</ContextMenu.Label>
+					<ContextMenu.Separator />
+					{#each Object.keys($Types) as type}
+						<ContextMenu.RadioItem value={type} class="capitalize">
+							{type}
+						</ContextMenu.RadioItem>
+					{/each}
+				</ContextMenu.RadioGroup>
+			</ContextMenu.Content>
+		</ContextMenu.Root>
+	</Drag>
 </Base>

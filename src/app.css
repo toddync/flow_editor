@@ -168,3 +168,11 @@
 .fn{
     margin-right: -6px;
 }
+
+.handle {
+	@apply !bg-orange-400 !size-2 !rounded-md !border-none
+}
+
+.line { 
+	@apply opacity-0 !w-2 
+}
