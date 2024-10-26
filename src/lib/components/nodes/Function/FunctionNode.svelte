@@ -15,6 +15,7 @@
 	import { writable } from "svelte/store";
 	import Base from "../Base.svelte";
 	import ParamList from "./ParamList.svelte";
+	import Glass from "$lib/components/Glass.svelte";
 
 	const InCon = useHandleConnections({
 		nodeId: $$props.id,
@@ -38,62 +39,63 @@
 <Base id={$$props.id}>
 	<Dialog.Root>
 		<Dialog.Trigger>
-			<Card.Root
-				class="bg-black/10 backdrop-blur-sm -z-10 -left-6 -bottom-6 drag "
-			>
-				<Card.Header>
-					<Card.Title class="flex">
-						<FnIcon class="h-10 -my-3 text-orange-500 fn" />
-						<span class="text-sm mt-auto font-jb text-orange-700"
-							>{$name}</span
-						>
-						<Parentheses class="h-10 -my-3 hide-second" />
-						<div class="-mx-[9px] text-xs my-auto font-jb flex">
-							{#each $params as param, i}
-								<span class="flex whitespace-nowrap">
-									{#if i > 0}
-										,
-									{/if}
-									{param.name}
-									<span
-										class="text-muted-foreground whitespace-nowrap text-[6px] hidden"
-									>
-										:int
+			<Glass>
+				<Card.Root class="-z-10 -left-6 -bottom-6 drag ">
+					<Card.Header>
+						<Card.Title class="flex">
+							<FnIcon class="h-10 -my-3 text-orange-500 fn" />
+							<span
+								class="text-sm mt-auto font-jb text-orange-700"
+								>{$name}</span
+							>
+							<Parentheses class="h-10 -my-3 hide-second" />
+							<div class="-mx-[9px] text-xs my-auto font-jb flex">
+								{#each $params as param, i}
+									<span class="flex whitespace-nowrap">
+										{#if i > 0}
+											,
+										{/if}
+										{param.name}
+										<span
+											class="text-muted-foreground whitespace-nowrap text-[6px] hidden"
+										>
+											:int
+										</span>
 									</span>
-								</span>
-							{/each}
-						</div>
-						<Parentheses class="h-10 -my-3 hide-first " />
-					</Card.Title>
-				</Card.Header>
-				<Handle
-					id="prev"
-					type="target"
-					position={Position.Left}
-					class="top-1/2 left-2.5"
-					handleClass={$InCon.length == 0 && "Out"}
-				>
-					<ArrowRight
-						class="w-3.5 absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2"
-					/>
-				</Handle>
-				<Handle
-					type="source"
-					id="start"
-					position={Position.Bottom}
-					class="left-1/2 -bottom-5"
-				>
-					<Play class="{iconClass} text-lime-400" />
-				</Handle>
-				<Handle
-					id="next"
-					type="source"
-					class="top-1/2 -right-5"
-					position={Position.Right}
-				>
-					<ArrowRight class={iconClass} />
-				</Handle>
-			</Card.Root>
+								{/each}
+							</div>
+							<Parentheses class="h-10 -my-3 hide-first " />
+						</Card.Title>
+					</Card.Header>
+					<Handle
+						id="prev"
+						type="target"
+						position={Position.Left}
+						class="top-1/2 left-2.5"
+						handleClass={$InCon.length == 0 && "Out"}
+					>
+						<ArrowRight
+							class="w-3.5 absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2"
+						/>
+					</Handle>
+					<Handle
+						type="source"
+						id="start"
+						position={Position.Bottom}
+						class="left-1/2 -bottom-5"
+					>
+						<Play class="{iconClass} text-lime-400" />
+					</Handle>
+					<Handle
+						id="next"
+						type="source"
+						class="top-1/2 -right-5"
+						position={Position.Right}
+					>
+						<ArrowRight class={iconClass} />
+					</Handle>
+				</Card.Root>
+			</Glass>
 		</Dialog.Trigger>
 		<Dialog.Content class="bg-black/60">
 			<Dialog.Header>

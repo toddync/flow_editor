@@ -16,7 +16,9 @@
 	import Base from "./Base.svelte";
 	import Handle from "./Handle.svelte";
 
-	const data = writable({});
+	const data = writable({ text: $$props.data.text || "" });
+
+	console.log($$props);
 
 	const updateInternals = useUpdateNodeInternals();
 	const updateNodeData = useSvelteFlow().updateNodeData;
@@ -34,15 +36,15 @@
 	$: isConnectable = $connections.length <= 1;
 </script>
 
-<Base id={$$props.id}>
+<Base id={$$props.id} class="size-full">
 	<Glass class="size-full">
 		<Card.Root class="size-full">
-			<Card.Content class="p-0 h-full flex flex-col">
+			<Card.Content class="p-0 min-h-full flex flex-col">
 				<NodeResizer
 					class="rounded-2xl"
 					isVisible={$$props.selected}
-					minHeight={100}
 					minWidth={80}
+					minHeight={80}
 				/>
 				<div
 					class="relative h-10 drag flex p-3 gap-1 border-b border-border"
@@ -59,7 +61,7 @@
 				</div>
 
 				<Textarea
-					class="text-xs h-full border-none font-jb resize-none min-h-0 min-w-0 p-1 overflow-scroll"
+					class="text-xs h-full border-none font-jb resize-none min-h-0 min-w-0 px-1 pb-1 pt-2 overflow-scroll"
 					spellcheck={false}
 					bind:value={$data.text}
 				/>
@@ -67,6 +69,7 @@
 				<Handle
 					{isConnectable}
 					type="source"
+					id="next"
 					position={Position.Bottom}
 					class="right-1/2 translate-x-1/2 translate-y-1/2 bottom-0"
 				>

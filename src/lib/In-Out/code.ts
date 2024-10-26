@@ -2,22 +2,19 @@
 import { Transpile } from "$lib/In-Out/transpiler";
 import download from "./download";
 
-const isTauri = "__TAURI_INTERNALS__" in window
+const isTauri = "__TAURI_INTERNALS__" in window;
 
 function CodeDown(nodes, edges) {
-    if(!isTauri){
-        download(
+	if (!isTauri) {
+		download(
 			"data:text/plain;charset=utf-8," +
 				encodeURIComponent(Transpile(nodes, edges)),
-			"svelte-flow.js",
+			"svelte-flow.js"
 		);
-        return
-    }
+		return;
+	}
 
-    download(
-        Transpile(nodes, edges),
-        "svelte-flow.js"
-    );
+	download(Transpile(nodes, edges), "svelte-flow.js");
 }
 
-export default CodeDown
+export default CodeDown;

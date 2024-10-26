@@ -19,7 +19,7 @@
 	import { v4 as uuidv4 } from "uuid";
 
 	const isTauri = "__TAURI_INTERNALS__" in window;
-	const { screenToFlowPosition } = useSvelteFlow();
+	const { screenToFlowPosition, fitView } = useSvelteFlow();
 	const types = Object.keys($nodeTypes);
 	const nodes = useNodes();
 
@@ -43,6 +43,7 @@
 
 	async function load(e) {
 		({ Nodes: $Nodes, Edges: $Edges } = await restore(e));
+		fitView();
 		close();
 	}
 </script>
@@ -113,4 +114,10 @@
 	</Command.List>
 </Command.Dialog>
 
-<input type="file" class="hidden" id="json" accept=".json" on:change={load} />
+<input
+	type="file"
+	class="hidden"
+	id="json"
+	accept=".json"
+	on:change={(e) => load(e)}
+/>
